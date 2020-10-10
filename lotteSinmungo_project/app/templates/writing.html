@@ -10,5 +10,13 @@
     <a href ="{% url 'solution' %}">롯데가해냈어</a>
     <a href ="{% url 'problemList' %}">롯데의숙제들</a>
     <a href ="{% url 'writing' %}">롯데에게말해줘</a>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{prb_form.as_p}}
+        <input type="submit" value="확인">
+    </form>
+
+
 </body>
 </html>
