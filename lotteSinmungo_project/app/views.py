@@ -1,11 +1,30 @@
-from django.shortcuts import render
-from .forms import SigninForm, SignupForm #이전에 만든 form 클래스를 선언해주고
+
+from django.shortcuts import render, redirect
+from .forms import ProblemForm, SigninForm, SignupForm#이전에 만든 form 클래스를 선언해주고
+from .models import Problem
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
 from django.contrib.auth.models import User
-# Create your views here.
+
+
 def index(request):
     return render(request, 'index.html')
+
+
+def problemList(request):
+    return render(request, 'problemList.html')
+
+def solution(request):
+    return render(request, 'solution.html')
+
+def writing(request):
+    if request.method == "POST":
+        filled_form = ProblemForm(request.POST)
+        if filled_form.is_valid():
+            filled_form.save()
+            return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
+    prb_form = ProblemForm()
+    return render(request, 'writing.html', {'prb_form':prb_form})
 
 def signup(request):#역시 GET/POST 방식을 사용하여 구현한다.
     if request.method == "GET":
@@ -35,3 +54,4 @@ def signup(request):#역시 GET/POST 방식을 사용하여 구현한다.
         else: #form.is_valid()가 아닐 경우, 즉 유효한 값이 들어오지 않았을 경우는
 
             return render(request, 'customlogin/signup.html',{'f':form})
+
