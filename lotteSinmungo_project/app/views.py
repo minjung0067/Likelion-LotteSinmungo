@@ -1,5 +1,4 @@
-
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProblemForm, SigninForm, SignupForm#이전에 만든 form 클래스를 선언해주고
 from .models import Problem
 from django.http.response import HttpResponseRedirect
@@ -12,6 +11,10 @@ from django.views.generic.list import ListView
 
 def index(request):
     return render(request, 'index.html')
+
+def problemDetail(request, problem_detial_id):
+    problem_detail_obj = get_object_or_404(Problem, pk = problem_detial_id)
+    return render(request, 'problem_detail.html', {"problem_detail_key":problem_detail_obj})
 
 def problemList(request):
     problem_list_item = Problem.objects.all()
