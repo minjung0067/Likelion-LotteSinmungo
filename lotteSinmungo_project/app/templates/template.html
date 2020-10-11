@@ -16,8 +16,8 @@
     <a href ="{% url 'solution' %}">롯데가해냈어</a>
     <a href ="{% url 'problemList' %}">롯데의숙제들</a>
     <a href ="{% url 'writing' %}">롯데에게말해줘</a>
-    <a href='/signin'>로그인</a>
-    <a href='/signup'>회원가입</a>
+    <a href="{% url 'signin' %}">로그인</a>
+    <a href="{% url 'signup' %}">회원가입</a>
 
 <!-- 다른 HTML 파일의 contents block이 삽입되는 부분-->
 {% block contents %}
