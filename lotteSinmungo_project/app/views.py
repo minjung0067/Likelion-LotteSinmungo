@@ -1,15 +1,23 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ProblemForm, SigninForm, SignupForm#이전에 만든 form 클래스를 선언해주고
-from .models import Problem
+
+from django.shortcuts import render, redirect , get_object_or_404
+from .forms import ProblemForm, SigninForm, SignupForm
+from .models import Problem , myUser
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate,logout
+from django.contrib.auth.hashers import make_password, check_password 
+from django.http import HttpResponse
 
 from django.views.generic.list import ListView
 
 
 
 def index(request):
+    user_id = request.session.get('user')
+    if user_id :
+        myuser_info = myUser.objects.get(pk=user_id)  #pk : primary key
+        return render(request, 'index.html', {'user':myuser_info}) 
     return render(request, 'index.html')
 
 def problemDetail(request, problem_detial_id):
@@ -32,32 +40,52 @@ def writing(request):
     prb_form = ProblemForm()
     return render(request, 'writing.html', {'prb_form':prb_form})
 
-def signup(request):#역시 GET/POST 방식을 사용하여 구현한다.
+def signup(request):   #회원가입 페이지를 보여주기 위한 함수
     if request.method == "GET":
-        return render(request, 'signup.html', {'f':SignupForm()} )
-    
-    
+        return render(request, 'signup.html')
+
     elif request.method == "POST":
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            if form.cleaned_data['password']  == form.cleaned_data['password_check']:
-#cleaned_data는 사용자가 입력한 데이터를 뜻한다.
-#즉 사용자가 입력한 password와 password_check가 맞는지 확인하기위해 작성해주었다.
+        username = request.POST.get('username',None)   #딕셔너리형태
+        password = request.POST.get('password',None)
+        re_password = request.POST.get('re_password',None)
+        res_data = {} 
+        if not (username and password and re_password) :
+            res_data['error'] = "모든 값을 입력해야 합니다."
+        if password != re_password :
+            # return HttpResponse('비밀번호가 다릅니다.')
+            res_data['error'] = '비밀번호가 다릅니다.'
+        else :
+            user = myUser(username=username, password=make_password(password))
+            user.save()
+            return render(request,'index.html')
+        return render(request, 'signup.html', res_data) #register를 요청받으면 register.html 로 응답.
 
-                new_user = User.objects.create_user(form.cleaned_data['username'],form.cleaned_data['email'],form.cleaned_data['password'])
-#User.object.create_user는 사용자가 입력한 name, email, password를 가지고 아이디를 만든다.
-#바로 .save를 안해주는 이유는 User.object.create를 먼저 해주어야 비밀번호가 암호화되어 저장된다.
+def signin(request):
+    response_data = {}
 
-                new_user.last_name = form.cleaned_data['last_name']
-                new_user.first_name = form.cleaned_data['first_name']
-#나머지 입력하지 못한 last_name과, first_name은 따로 지정해준다.
-                new_user.save()
-                
-                return HttpResponseRedirect(reverse('vote:index'))      
+    if request.method == "GET" :
+        return render(request, 'signin.html')
+
+    elif request.method == "POST":
+        login_username = request.POST.get('username', None)
+        login_password = request.POST.get('password', None)
+
+
+        if not (login_username and login_password):
+            response_data['error']="아이디와 비밀번호를 모두 입력해주세요."
+        else : 
+            myuser = get_object_or_404(myUser,username=login_username)
+            #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
+            if check_password(login_password, myuser.password):
+                request.session['user'] = myuser.id 
+                #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
+                #세션 user라는 key에 방금 로그인한 id를 저장한것.
+                return redirect('/')
             else:
-                return render(request, 'signup.html',{'f':form, 'error':'비밀번호와 비밀번호 확인이 다릅니다.'})#password와 password_check가 다를 것을 대비하여 error를 지정해준다.
+                response_data['error'] = "비밀번호를 틀렸습니다."
 
-        else: #form.is_valid()가 아닐 경우, 즉 유효한 값이 들어오지 않았을 경우는
+        return render(request, 'signin.html',response_data)
 
-            return render(request, 'signup.html',{'f':form})
-
+def signout(request): #logout 기능
+    logout(request) #logout을 수행한다.
+    return HttpResponseRedirect(reverse('index'))
