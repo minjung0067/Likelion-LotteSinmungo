@@ -7,8 +7,8 @@
 
 {% block contents %}
 <!-- 실제 Body의 내용이 들어가는 부분-->
-{% if user %} 
-{{user.username}}
+{% if user_authentication %}
     <a href="{% url 'signout' %}">로그아웃</a>
+{{user.username}}
 {% endif %}
 {% endblock contents %}
