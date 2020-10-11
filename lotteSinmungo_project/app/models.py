@@ -1,15 +1,16 @@
 from django.db import models
 
-class Problem (models.Model):
+class Problem(models.Model):
     objects = models.Manager()
     title = models.CharField(max_length=100)
     body = models.TextField()
     updated_at = models.DateTimeField(auto_now=True) 
 
-class Problem_solutions(models.Model):
+class Solution(models.Model):
+    objects = models.Manager()
     title = models.CharField(max_length=100)
     body = models.TextField()
-    original_date = models.DateTimeField(auto_now=False)
+    original_date = models.DateTimeField(auto_now=True)
     upload_date = models.DateTimeField(auto_now=True)
     
 class myUser(models.Model): #장고에서 제공하는 models.Model를 상속받아야한다.
