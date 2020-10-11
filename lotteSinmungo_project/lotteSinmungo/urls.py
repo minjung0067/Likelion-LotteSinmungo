@@ -25,4 +25,6 @@ urlpatterns = [
     path('problemDetail/<int:problem_detial_id>', views.problemDetail, name = "problemDetail"),
     path('writing/',views.writing, name = 'writing'),
     path('signup/', views.signup, name='signup'),
+    path('signin/', views.signin, name='signin'),
+    path('signout/', views.signout, name='signout'),
 ]
