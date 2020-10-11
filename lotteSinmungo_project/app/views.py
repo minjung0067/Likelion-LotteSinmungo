@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect , get_object_or_404
 from .forms import ProblemForm
-from .models import Problem , myUser , Problem_solutions
+from .models import Problem , myUser ,Solutions
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
 from django.contrib.auth.models import User
