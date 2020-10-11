@@ -17,8 +17,8 @@ def index(request):
     user_id = request.session.get('user')
     if user_id :
         myuser_info = myUser.objects.get(pk=user_id)  #pk : primary key
-        return render(request, 'index.html', {'user':myuser_info}) 
-    return render(request, 'index.html')
+        return render(request, 'index.html', {'user':myuser_info, 'user_authentication':True}) 
+    return render(request, 'index.html',{'user_authentication':False})
 
 def problemDetail(request, problem_detial_id):
     problem_detail_obj = get_object_or_404(Problem, pk = problem_detial_id)
@@ -50,6 +50,14 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         password = request.POST.get('password',None)
         re_password = request.POST.get('re_password',None)
         res_data = {} 
+
+        if (username):
+            try:
+                get_object_or_404(myUser,username=username)
+                res_data['error'] = "이미 있는 아이디 입니다."
+                return render(request, 'signup.html', res_data) #register를 요청받으면 register.html 로 응답.
+            except :
+                pass
         if not (username and password and re_password) :
             res_data['error'] = "모든 값을 입력해야 합니다."
         if password != re_password :
@@ -74,7 +82,7 @@ def signin(request):
 
         if not (login_username and login_password):
             response_data['error']="아이디와 비밀번호를 모두 입력해주세요."
-        else : 
+        else :
             myuser = get_object_or_404(myUser,username=login_username)
             #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
             if check_password(login_password, myuser.password):
@@ -83,7 +91,7 @@ def signin(request):
                 #세션 user라는 key에 방금 로그인한 id를 저장한것.
                 return redirect('/')
             else:
-                response_data['error'] = "비밀번호를 틀렸습니다."
+                response_data['error'] = "비밀번호가 틀렸습니다."
 
         return render(request, 'signin.html',response_data)
 
