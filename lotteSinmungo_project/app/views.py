@@ -25,7 +25,11 @@ def problemDetail(request, problem_detial_id):
     return render(request, 'problem_detail.html', {"problem_detail_key":problem_detail_obj})
 
 def problemList(request):
-    problem_list_item = Problem.objects.all()
+    if request.GET.get('sort') == 'early_date':
+        problem_list_item = Problem.objects.all().order_by('-updated_at') #order_by를 통해 시간순(최근에서 내림차순) 정렬
+    # elif request.GET.get('sort') == 'many_like':
+    else:
+        problem_list_item = Problem.objects.all().order_by('updated_at')
     return render(request, 'problemList.html', {'problem_list_item':problem_list_item})
 
 # sort 구현 참고용

@@ -4,7 +4,11 @@ class Problem(models.Model):
     objects = models.Manager()
     title = models.CharField(max_length=100)
     body = models.TextField()
-    updated_at = models.DateTimeField(auto_now=True) 
+    updated_at = models.DateTimeField(auto_now=True)
+    # userid = models.IntegerField()
+    # like_count = models.PositiveIntegerField(default=0)
+    # def __str__(self):
+    #     return self.title
 
 class Solution(models.Model):
     objects = models.Manager()
