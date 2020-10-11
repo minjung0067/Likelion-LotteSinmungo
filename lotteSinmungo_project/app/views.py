@@ -9,6 +9,9 @@ from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.hashers import make_password, check_password 
 from django.http import HttpResponse
 
+from django.views.generic.list import ListView
+
+
 
 def index(request):
     user_id = request.session.get('user')
@@ -17,9 +20,13 @@ def index(request):
         return render(request, 'index.html', {'user':myuser_info}) 
     return render(request, 'index.html')
 
+def problemDetail(request, problem_detial_id):
+    problem_detail_obj = get_object_or_404(Problem, pk = problem_detial_id)
+    return render(request, 'problem_detail.html', {"problem_detail_key":problem_detail_obj})
 
 def problemList(request):
-    return render(request, 'problemList.html')
+    problem_list_item = Problem.objects.all()
+    return render(request, 'problemList.html', {'problem_list_item':problem_list_item})
 
 def solution(request):
     return render(request, 'solution.html')

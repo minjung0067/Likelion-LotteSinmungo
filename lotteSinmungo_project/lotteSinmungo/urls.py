@@ -22,6 +22,7 @@ urlpatterns = [
     path('', views.index, name = 'index'),
     path('solution/',views.solution, name = 'solution'),
     path('problemList/',views.problemList, name = 'problemList'),
+    path('problemDetail/<int:problem_detial_id>', views.problemDetail, name = "problemDetail"),
     path('writing/',views.writing, name = 'writing'),
     path('signup/', views.signup, name='signup'),
     path('signin/', views.signin, name='signin'),
