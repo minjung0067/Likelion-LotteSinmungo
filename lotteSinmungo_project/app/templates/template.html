@@ -7,7 +7,6 @@
     {% endblock title %}
     {% load static %}
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="template.css">
 </head>
 <style>
     * {
@@ -25,14 +24,14 @@
     }
     .upbar{
         width : 100%;
-        height : 40px;
-        margin : 5px;
-        background-color : wheat;
+        height : 60px;
+        background-color :white;
+        text-align: right;
         }
     .bar{
         width : 100%;
         height : 340px;
-        flex-direction: column;
+        flex-direction: column; 
         background-color : white;
         }
     .logo{
@@ -44,7 +43,9 @@
     .m_bar{
         width : 100%;
         height : 150px;
+        line-height : 150px;
         background-color : #DA291C;
+        text-align : center;
         }
     .m_container{
         width : 100%;
@@ -73,7 +74,7 @@
 <!-- 항상 Body에 존재하는 상단 메뉴 부분-->
 <body>
     <div class = "container">
-        <div class = "upbar" style = "text-align : left;">
+        <div class = "upbar">
             <a href = "{% url 'signin' %}">로그인</a>
             <a href = "{% url 'signup' %}"    text-align : left;>회원가입</a>
             <a>F&Q</a>
@@ -84,9 +85,13 @@
                 <img src = "static/image/mainlogo.png" %} width = "820px" height = "180px" text-align = "center">
             </div>
             <div class = "m_bar">
-                <a href ="{% url 'solution' %}">롯데가해냈어</a>
-                <a href ="{% url 'problemList' %}">롯데의숙제들</a>
-                <a href ="{% url 'writing' %}">롯데에게말해줘</a>
+                <a href ="{% url 'solution' %}" style="color: white; font-size : 30px;">롯데가 해냈어</a>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a style="color: white; font-size : 30px;">|</a>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <a href ="{% url 'problemList' %}" style="color: white; font-size : 30px;">롯데의 숙제들</a>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a style="color: white; font-size : 30px;">|</a>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <a href ="{% url 'writing' %}" style="color: white; font-size : 30px;">롯데에게 말해줘</a>
             </div>
          </div>
         <div class = "m_container">
