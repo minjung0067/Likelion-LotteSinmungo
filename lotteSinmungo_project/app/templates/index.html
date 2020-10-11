@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>롯데신문고</title>
-</head>
-<body>
+{% extends "template.html" %}
+{% load static %}
 
-    <a href = "{% url 'index' %}">이미지로고자리</a>
-    <a href ="{% url 'solution' %}">롯데가해냈어</a>
-    <a href ="{% url 'problemList' %}">롯데의숙제들</a>
-    <a href ="{% url 'writing' %}">롯데에게말해줘</a>
+{% block title %}
+<title>롯데신문고</title>
+{% endblock title %}
 
- 
-    <a href='/signup'>회원가입</a>
+{% block contents %}
 
-</body>
-</html>
+<!-- 실제 Body의 내용이 들어가는 부분-->
+{% if user_authentication %}
+    <a href="{% url 'signout' %}">로그아웃</a>
+{{user.username}}
+{% endif %}
+
+<!-- 이 아래부터는 html 콘텐츠 내용입니다 -->
+{% endblock contents %}
