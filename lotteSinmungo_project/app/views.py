@@ -10,8 +10,10 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.http import HttpResponse
 
 from django.views.generic.list import ListView
-
-
+import json
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 def index(request):
     user_id = request.session.get('user')
@@ -106,3 +108,21 @@ def signout(request): #로그아웃 기능
 def mypage(request):
     return render(request, 'mypage.html')
 
+@login_required
+def problem_like(request, problem_detail_key_id):
+    problem = get_object_or_404(Problem, id=problem_detail_key_id)
+    user = request.user
+    profile = myUser.objects.get(user=user)
+
+    check_like_post = profile.like_problems.filter(id=problem_detail_key_id)
+
+    if check_like_post.exists():
+        profile.like_problems.remove(problem)
+        problem.like_count -= 1
+        problem.save()
+    else:
+        profile.like_posts.add(problem)
+        problem.like_count += 1
+        problem.save()
+
+    return render(request, 'problem_detail.html', {"problem_detail_key":problem_detail_obj})

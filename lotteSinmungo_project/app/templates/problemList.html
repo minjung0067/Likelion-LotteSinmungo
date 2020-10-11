@@ -14,7 +14,8 @@
     <a href='/signup'>회원가입</a>
 
     {% for i in problem_list_item %}
-        <a href= "{% url 'problemDetail' i.id %}"><h1> {{i.title}}</h1></a>
+        <a href= "{% url 'problemDetail' i.id %}"><h1> {{i.title}} ♥:{{i.like_count}}</h1></a>
+
     {% endfor %}
 
 </body>
