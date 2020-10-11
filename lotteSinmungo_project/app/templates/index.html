@@ -9,6 +9,9 @@
 
 <!-- 실제 Body의 내용이 들어가는 부분-->
 
+    <a href="{% url 'signout' %}">로그아웃</a>
+
+{{user.username}}
 
 <!-- 이 아래부터는 html 콘텐츠 내용입니다 -->
 {% endblock contents %}
