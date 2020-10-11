@@ -1,0 +1,23 @@
+</body>
+</html>
+
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+<title>롯데신문고</title>
+{% endblock title %}
+
+{% block contents %}
+
+<!-- 이 아래부터는 html 콘텐츠 내용입니다 -->
+{% if user.is_authenticated %}
+    <p>좋아요한 불만사항</p>
+    <!-- 추가되어야함 -->
+    <p>내가 작성한 불만사항</p>
+    <!-- 추가되어야함 -->
+    {% else %}
+    <p>로그인이 필요한 서비스입니다</p>
+
+{% endif %}
+{% endblock contents %}
