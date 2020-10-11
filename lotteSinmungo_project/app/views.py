@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect , get_object_or_404
 from .forms import ProblemForm, SigninForm, SignupForm
-from .models import Problem , myUser
+from .models import Problem , myUser, Problem_solutions
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
 from django.contrib.auth.models import User
@@ -29,7 +29,8 @@ def problemList(request):
     return render(request, 'problemList.html', {'problem_list_item':problem_list_item})
 
 def solution(request):
-    return render(request, 'solution.html')
+    solution_item = Problem_solutions.objects.all()
+    return render(request, 'solution.html', {'solution_item':solution_item})
 
 def writing(request):
     if request.method == "POST":
