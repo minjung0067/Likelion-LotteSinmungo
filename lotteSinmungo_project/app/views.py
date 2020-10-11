@@ -14,11 +14,8 @@ from django.views.generic.list import ListView
 
 
 def index(request):
-    user_id = request.session.get('user')
-    if user_id :
-        myuser_info = myUser.objects.get(pk=user_id) 
-        return render(request, 'index.html', {'user':myuser_info, 'user_authentication':True}) 
-    return render(request, 'index.html',{'user_authentication':False})
+
+    return render(request, 'index.html')
 
 def problemDetail(request, problem_detial_id):
     problem_detail_obj = get_object_or_404(Problem, pk = problem_detial_id)
@@ -37,7 +34,7 @@ def solutionDetail(request, solution_detail_id):
     return render(request, 'solution_detail.html', {"solution_detail_item":solution_detail_item})
 
 def writing(request):
-    user_id = request.session.get('user')
+    user_id = request.user.id
     if request.method == "POST":
         filled_form = ProblemForm(request.POST)
         if filled_form.is_valid():
@@ -89,10 +86,9 @@ def signin(request): #로그인 기능
         if not (login_username and login_password):
             response_data['error']="아이디와 비밀번호를 모두 입력해주세요."
         else :
-            myuser = get_object_or_404(myUser,username=login_username)
-            if check_password(login_password, myuser.password):
-                request.session['user'] = myuser.id 
-                #세션 user라는 key에 방금 로그인한 id를 저장한것.
+            myuser = authenticate(request, username=login_username, password=login_password)
+            if myuser is not None:
+                login(request, myuser)
                 return redirect('/')
             else:
                 response_data['error'] = "비밀번호가 틀렸습니다."
