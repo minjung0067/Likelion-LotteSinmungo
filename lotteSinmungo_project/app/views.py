@@ -29,8 +29,12 @@ def problemList(request):
     return render(request, 'problemList.html', {'problem_list_item':problem_list_item})
 
 def solution(request):
-    solution_item = Problem_solutions.objects.all()
+    solution_item = Solution.objects.all()
     return render(request, 'solution.html', {'solution_item':solution_item})
+
+def solutionDetail(request, solution_detail_id):
+    solution_detail_item = get_object_or_404(Solution, pk = solution_detail_id)
+    return render(request, 'solution_detail.html', {"solution_detail_item":solution_detail_item})
 
 def writing(request):
     user_id = request.session.get('user')
