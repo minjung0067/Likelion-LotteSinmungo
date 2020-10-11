@@ -90,3 +90,6 @@ def signin(request):
 def signout(request): #logout 기능
     logout(request) #logout을 수행한다.
     return HttpResponseRedirect(reverse('index'))
+
+def mypage(request):
+    return render(request, 'mypage.html')
