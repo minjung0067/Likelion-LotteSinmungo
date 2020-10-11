@@ -108,7 +108,7 @@ def mypage(request):
 def problem_like(request, problem_detail_key_id):
     problem = get_object_or_404(Problem, id=problem_detail_key_id)
     user = request.user
-    profile = myUser.objects.get(user=user)
+    profile = myUser.objects.get(id=user.id)
 
     check_like_post = profile.like_problems.filter(id=problem_detail_key_id)
 
@@ -117,8 +117,8 @@ def problem_like(request, problem_detail_key_id):
         problem.like_count -= 1
         problem.save()
     else:
-        profile.like_posts.add(problem)
+        profile.like_problems.add(problem)
         problem.like_count += 1
         problem.save()
 
-    return render(request, 'problem_detail.html', {"problem_detail_key":problem_detail_obj})
+    return render(request, 'problem_detail.html', {"problem_detail_key":problem,"check_like_post" : check_like_post})
