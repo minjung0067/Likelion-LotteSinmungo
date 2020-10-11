@@ -106,7 +106,28 @@
             <h1>여기는 푸터</h1>
         </div>
     </div>
-   
+    <a href = "{% url 'index' %}">이미지로고자리</a>
+    <a href ="{% url 'solution' %}">롯데가해냈어</a>
+    <a href ="{% url 'problemList' %}">롯데의숙제들</a>
+    <a href ="{% url 'writing' %}">롯데에게말해줘</a>
+
+    {% if user.is_authenticated %}
+    <p>{{user}}님! 함께 불만을 나눠주세요 :D</p>
+    <a href="{% url 'signout' %}">
+        <button>로그아웃</button>
+    </a>
+    <a href="{% url 'mypage' %}">마이페이지</a>
+
+    {% else %}
+    <a href="{% url 'signup' %}">
+        <button>회원가입</button>
+    </a>
+    <br>
+    <a href="{% url 'signin' %}">
+        <button>로그인</button>
+    </a>
+    <br>
+    {% endif %}
 
 
 <!-- 다른 HTML 파일의 contents block이 삽입되는 부분-->
