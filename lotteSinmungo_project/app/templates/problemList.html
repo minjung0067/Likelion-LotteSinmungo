@@ -14,8 +14,8 @@
     <a href='/signup'>회원가입</a>
 
     {% for i in problem_list_item %}
-        <h1> {{i.title}}</h1>
-        <p> {{i.body}}</p>
+        <a href= "{% url 'problemDetail' i.id %}"><h1> {{i.title}}</h1></a>
     {% endfor %}
+
 </body>
 </html>
