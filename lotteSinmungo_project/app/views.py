@@ -6,13 +6,16 @@ from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
 from django.contrib.auth.models import User
 
+from django.views.generic.list import ListView
+
+
 
 def index(request):
     return render(request, 'index.html')
 
-
 def problemList(request):
-    return render(request, 'problemList.html')
+    problem_list_item = Problem.objects.all()
+    return render(request, 'problemList.html', {'problem_list_item':problem_list_item})
 
 def solution(request):
     return render(request, 'solution.html')
