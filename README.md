@@ -7,6 +7,13 @@ Developer 김재훈 이민정 이명환 이예빈 우인아 차주희
 ## flow chart
 ![flow chart](https://user-images.githubusercontent.com/56781342/95323998-0255c400-08da-11eb-96ec-c3528bad8f26.PNG)
 
+## design
+>XD Link:
+https://xd.adobe.com/view/8c7e09e3-94f1-41ee-9607-ab5e32c3d3c4-d92d/
+
+>CSS info:
+https://zpl.io/V07vLZR
+
 ## To do list
 모델 짜기
 
