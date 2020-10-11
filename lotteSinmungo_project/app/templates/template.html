@@ -3,21 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     {% block title %}
     {% endblock title %}
-
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        html, body {
+            height: 100%;
+            background-color: white;
+        }
+        .upbar {
+            width : 100%;
+            height : 210px;
+            flex-direction: column;
+            background-color : white;
+        }
+        .logo{
+            width : 100%;
+            height :140px;
+            align-items : center;
+            background-color :white; 
+        }
+        .bar{
+            width : 100%;
+            height : 70px;
+            background-color : #DA291C;
+            color : white;
+            font-size : h1;
+        }
+        .m_container{
+            width : 100%;
+            height : 500px;
+            background-color : lightgray;
+        }
+        .footer{
+            background-color : #DA291C;
+        }
+    </style>
 </head>
 
 <!-- 항상 Body에 존재하는 상단 메뉴 부분-->
 <body>
-    <a href = "{% url 'index' %}">이미지로고자리</a>
-    <a href ="{% url 'solution' %}">롯데가해냈어</a>
-    <a href ="{% url 'problemList' %}">롯데의숙제들</a>
-    <a href ="{% url 'writing' %}">롯데에게말해줘</a>
-    <a href="{% url 'signin' %}">로그인</a>
-    <a href="{% url 'signup' %}">회원가입</a>
+    <div class = "container">
+        <div class = "upbar">
+            <div class = "logo">
+                <img src = "C:\Users\merry\Desktop\멋사\Likelion-LotteSinmungo\lotteSinmungo_project" width = "820px" height = "120px">
+            </div>
+            <div class = "bar">
+                <a href ="{% url 'solution' %}" color = "white">롯데가해냈어</a>
+                <a href ="{% url 'problemList' %}">롯데의숙제들</a>
+                <a href ="{% url 'writing' %}">롯데에게말해줘</a>
+            </div>
+        </div>
+        <div class = "m_container">
+            <h1>여기는 다른거 들어갈 자리</h1>
+        </div>
+        <div class = "footer">
+            <h1>여기는 푸터</h1>
+        </div>
+    </div>
+   
+
 
 <!-- 다른 HTML 파일의 contents block이 삽입되는 부분-->
 {% block contents %}
