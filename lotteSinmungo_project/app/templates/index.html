@@ -6,14 +6,23 @@
     <title>롯데신문고</title>
 </head>
 <body>
-
+    {% if user %} 
+    {{user.username}}
     <a href = "{% url 'index' %}">이미지로고자리</a>
     <a href ="{% url 'solution' %}">롯데가해냈어</a>
     <a href ="{% url 'problemList' %}">롯데의숙제들</a>
     <a href ="{% url 'writing' %}">롯데에게말해줘</a>
-
- 
-    <a href='/signup'>회원가입</a>
+    <a href="{% url 'signup' %}">회원가입</a>
+    <a href="{% url 'signin' %}">로그인</a>
+    <a href="{% url 'signout' %}">로그아웃</a>
+    {% else %}
+    <a href = "{% url 'index' %}">이미지로고자리</a>
+    <a href ="{% url 'solution' %}">롯데가해냈어</a>
+    <a href ="{% url 'problemList' %}">롯데의숙제들</a>
+    <a href ="{% url 'writing' %}">롯데에게말해줘</a>
+    <a href="{% url 'signup' %}">회원가입</a>
+    <a href="{% url 'signin' %}">로그인</a>
+    {% endif %}
 
 </body>
 </html>
