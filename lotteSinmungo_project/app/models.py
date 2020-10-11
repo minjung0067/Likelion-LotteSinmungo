@@ -6,6 +6,12 @@ class Problem (models.Model):
     body = models.TextField()
     updated_at = models.DateTimeField(auto_now=True) 
 
+class Problem_solutions(models.Model):
+    title = models.CharField(max_length=100)
+    body = models.TextField()
+    original_date = models.DateTimeField(auto_now=False)
+    upload_date = models.DateTimeField(auto_now=True)
+    
 class myUser(models.Model): #장고에서 제공하는 models.Model를 상속받아야한다.
     objects = models.Manager()
     username = models.CharField(max_length=64,verbose_name = '사용자명')
