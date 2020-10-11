@@ -5,61 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}
     {% endblock title %}
+    {% load static %}
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
-    <style>
-        *{
-            margin: 0px;
-            padding: 0px;
-        }
-        html, body {
-            height: 100%;
-            background-color: white;
-        }
-        .upbar {
-            width : 100%;
-            height : 210px;
-            flex-direction: column;
-            background-color : white;
-        }
-        .logo{
-            width : 100%;
-            height :140px;
-            align-items : center;
-            background-color :white; 
-        }
-        .bar{
-            width : 100%;
-            height : 70px;
-            background-color : #DA291C;
-            color : white;
-            font-size : h1;
-        }
-        .m_container{
-            width : 100%;
-            height : 500px;
-            background-color : lightgray;
-        }
-        .footer{
-            background-color : #DA291C;
-        }
-    </style>
-</head>
 
+</head>
+<style>
+    * {
+    margin: 0px;
+    padding: 0px;
+    }
+    a { text-decoration:none } 
+    .body {
+        margin : 0;
+        display : flex;
+        height : 1080px;
+        }
+    .container {
+        height : 100%;
+        flex-direction: column;
+    }
+    .upbar{
+        width : 100%;
+        height : 60px;
+        background-color :white;
+        text-align: right;
+        padding-top: 15px;
+        }
+    .bar{
+        width : 100%;
+        height : 300px;
+        flex-direction: column; 
+        background-color : white;
+        align-items: center;
+        }
+    .logo{
+        width : 100%;
+        height :190px;
+        background-color :white;
+        text-align: center;
+        }
+    .m_bar{
+        width : 100%;
+        height : 110px;
+        line-height : 110px;
+        background-color : #DA291C;
+        text-align : center;
+        }
+    .m_container{
+        width : 100%;
+        height : 500px;
+        background-color : wheat;
+        flex-direction : row;
+        }
+    .l_container{
+        width: 50%;
+        height : 500px;
+        float: left;
+        box-sizing: border-box;
+        background-color : yellow;
+        }
+    .r_container{
+        width : 50%;
+        height : 500px;
+        float: right;
+        box-sizing: border-box;
+        background-color : black;
+        }
+    .footer{
+        background-color : #DA291C;
+    }
+</style>
 <!-- 항상 Body에 존재하는 상단 메뉴 부분-->
 <body>
     <div class = "container">
         <div class = "upbar">
+            <a href = "{% url 'signin' %}" style="color: black; font-size : 15px;">로그인</a>&emsp;&emsp;&emsp;&emsp;
+            <a href = "{% url 'signup' %}" style="color: black; font-size : 15px;">회원가입</a>&emsp;&emsp;&emsp;&emsp;
+            <a style="color: black; font-size : 15px;">F&Q</a>&emsp;&emsp;&emsp;&emsp;
+            <a style="color: black; font-size : 15px;">고객센터</a>&emsp;&emsp;&emsp;&emsp;
+        </div>
+        <div class = "bar">
             <div class = "logo">
-                <img src = "C:\Users\merry\Desktop\멋사\Likelion-LotteSinmungo\lotteSinmungo_project" width = "820px" height = "120px">
+                <img src = "static/image/mainlogo.png" width = "820px" height = "180px">
             </div>
-            <div class = "bar">
-                <a href ="{% url 'solution' %}" color = "white">롯데가해냈어</a>
-                <a href ="{% url 'problemList' %}">롯데의숙제들</a>
-                <a href ="{% url 'writing' %}">롯데에게말해줘</a>
+            <div class = "m_bar">
+                <a href ="{% url 'solution' %}" style="color: white; font-size : 30px;">롯데가 해냈어</a>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a style="color: white; font-size : 30px;">|</a>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <a href ="{% url 'problemList' %}" style="color: white; font-size : 30px;">롯데의 숙제들</a>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a style="color: white; font-size : 30px;">|</a>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <a href ="{% url 'writing' %}" style="color: white; font-size : 30px;">롯데에게 말해줘</a>
             </div>
         </div>
         <div class = "m_container">
-            <h1>여기는 다른거 들어갈 자리</h1>
+            <div class = "l_container">
+                여기는 왼쪽 컨테이너
+            </div>
+            <div class = "r_container">
+                여기는 오른쪽 컨테이너
+            </div>
         </div>
         <div class = "footer">
             <h1>여기는 푸터</h1>
