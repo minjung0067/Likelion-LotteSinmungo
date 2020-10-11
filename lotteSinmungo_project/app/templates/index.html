@@ -6,6 +6,22 @@
 {% endblock title %}
 
 {% block contents %}
-<!-- 실제 Body의 내용이 들어가는 부분-->
+
+<!-- 이 아래부터는 html 콘텐츠 내용입니다 -->
+
+{% if user.is_authenticated %}
+    <button>로그아웃</button>
+{{user}}님 함께 불만을 나눠주세요 :D
+
+{% else %}
+<a href="{% url 'signup' %}">
+<button>회원가입</button>
+</a>
+
+<a href="{% url 'signin' %}">
+    <button>로그인</button>
+</a>
+{% endif %}
+
 
 {% endblock contents %}
