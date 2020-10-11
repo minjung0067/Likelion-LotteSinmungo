@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 class Solution(models.Model):
     objects = models.Manager()
@@ -7,9 +8,8 @@ class Solution(models.Model):
     original_date = models.DateTimeField(auto_now=True)
     upload_date = models.DateTimeField(auto_now=True)
     
-class myUser(models.Model): #장고에서 제공하는 models.Model를 상속받아야한다.
-    objects = models.Manager()
-    username = models.CharField(max_length=64,verbose_name = '사용자명')
+class myUser(AbstractUser):
+    username = models.CharField(max_length=64,verbose_name = '사용자명', unique=True)
     password = models.CharField(max_length=64,verbose_name = '비밀번호')
     registered_dttm = models.DateTimeField(auto_now_add=True,verbose_name='등록시간')
     
