@@ -15,6 +15,11 @@
     <a href='/signin'>로그인</a>
     <a href='/signup'>회원가입</a>
 
+    <!-- ranking -->
+    <p>----------------------------</p>
+    <!-- use crontab or Periodic Tasks -->
+
+    <p>----------------------------</p>
     {% for i in problem_list_item %}
         <a href= "{% url 'problemDetail' i.id %}"><h1> {{i.title}} ♥:{{i.like_count}}</h1></a>
 

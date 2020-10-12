@@ -18,7 +18,7 @@ class myUser(AbstractUser):
         return self.username  
 
     class Meta:
-        db_table = 'test_user'
+        db_table = 'my_user'
 
 class Problem (models.Model):
     objects = models.Manager()
