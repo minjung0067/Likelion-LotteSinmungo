@@ -83,20 +83,39 @@
     .rul_container{
         width : 50%;
         height : 100%;
-        background-color : green;
-        flex : 1;
+        background-color : white;
+        text-align: left;
+        padding-left : 50px;
+        padding-top : 18px;
     }
     .rur_container{
         width : 50%;
         height : 100%;
-        background-color : gray;
-        flex : 1;
+        background-color : white;
+        text-align : center;
+        padding-top : 30px;
+        padding-right : 40px;
+
     }
     .rd_container{
         width : 100%;
         height : 60%;
-        background-color : blue;
+        background-color : white;
+        text-align : center;
     }
+    .button {
+        width:300px;
+        background-color: #DA291C;
+        border: none;
+        color:#fff;
+        padding: 15px 0;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 25px;
+        margin: 4px;
+        cursor: pointer;
+}
     .footer{
         background-color : #DA291C;
     }
@@ -131,12 +150,21 @@
             <div class = "r_container">
                 <div class = "ru_container">
                     <div class = "rul_container">
+                        <br><br><a style  = "color : gray; font-size : 30px; font-style : bold;">롯데그룹은 고객의 목소리를 듣습니다.</a><br><br>
+                        <a style = "color : gray; font-size : 25px;">롯데 신문고에 방문해주셔서 감사합니다. <br>
+                        무엇이든 말씀해주세요 ! </a>
                     </div>
                     <div class = "rur_container">
-
+                        <a href="{% url 'signin' %}">
+                            <div class = "button">Sign In</div>
+                            <br><br>
+                        <a href="{% url 'signup' %}">
+                            <div class = "button">Sing Up</div>
+                        </a>   
                     </div>
                 </div>
                 <div class = "rd_container">
+                    <img src = "static/image/롯문고 캐릭터.png" width = "350px" height = "300px">
                 </div>
             </div> 
         </div>
@@ -156,7 +184,6 @@
     <a href="{% url 'signup' %}">
         <button>회원가입</button>
     </a>
-    <br>
     <a href="{% url 'signin' %}">
         <button>로그인</button>
     </a>
