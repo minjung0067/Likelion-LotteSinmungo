@@ -19,6 +19,10 @@
     <p>----------------------------</p>
     <!-- use crontab or Periodic Tasks -->
 
+    {% for k in problem_trending %}
+        <a href= "{% url 'problemDetail' k.id %}"><h1> {{k.title}} ♥:{{k.like_count}}</h1></a>
+
+    {% endfor %}
     <p>----------------------------</p>
     {% for i in problem_list_item %}
         <a href= "{% url 'problemDetail' i.id %}"><h1> {{i.title}} ♥:{{i.like_count}}</h1></a>
