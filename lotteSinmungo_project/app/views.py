@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.hashers import make_password, check_password 
 from django.http import HttpResponse
-
+from django.db.models import Count
 from django.views.generic.list import ListView
 import json
 from django.http import HttpResponse
@@ -25,7 +25,12 @@ def problemDetail(request, problem_detial_id):
 
 def problemList(request):
     problem_list_item = Problem.objects.all()
-    return render(request, 'problemList.html', {'problem_list_item':problem_list_item})
+
+    """--- 랭킹 ---"""
+    problem_trending = Problem.objects.order_by('-like_count', '-updated_at')
+    problem_trending = problem_trending[:10]
+    """----------- """
+    return render(request, 'problemList.html', {'problem_list_item':problem_list_item,'problem_trending':problem_trending})
 
 def solution(request):
     solution_item = Solution.objects.all()

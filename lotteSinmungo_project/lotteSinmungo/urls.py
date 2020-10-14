@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
+# from app.funtion.rankReset import scheduler 
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,3 +37,4 @@ urlpatterns = [
 
     path('like/<int:problem_detail_key_id>', views.problem_like, name='problem_like'),
 ]
+# scheduler.start()
