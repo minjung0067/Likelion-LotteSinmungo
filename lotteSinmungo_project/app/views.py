@@ -15,8 +15,16 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-def index(request):
+from django.db.models.signals import post_save
+from notifications.signals import notify
 
+def index(request):
+    lotteadmin = myUser.objects.get(id = 1)
+    recipients = myUser.objects.all()
+    user = request.user
+    if user in recipients:
+        unread_messages = user.notifications.unread()
+        return render(request, 'index.html', {'unread_messages':unread_messages})
     return render(request, 'index.html')
 
 def problemDetail(request, problem_detial_id):
@@ -25,6 +33,8 @@ def problemDetail(request, problem_detial_id):
 
 def problemList(request):
     problem_list_item = Problem.objects.all()
+    user = request.user
+    user.notifications.mark_all_as_read()
 
     """--- 랭킹 ---"""
     problem_trending = Problem.objects.order_by('-like_count', '-updated_at')
@@ -42,12 +52,17 @@ def solutionDetail(request, solution_detail_id):
 
 def writing(request):
     user_id = request.user.id
+    user = request.user #알림 보낼 관리자
+    recipients = myUser.objects.all()  #알림 받을 사람들
     if request.method == "POST":
         filled_form = ProblemForm(request.POST)
         if filled_form.is_valid():
             post = filled_form.save(commit=False)
             post.userid = user_id
             post.save()
+            if user in recipients:
+                unread_messages = user.notifications.unread()
+                notify.send (user, recipient = recipients, verb ='님께서 새로운 숙제를 작성하셨습니다 (●''●)')
             return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
     prb_form = ProblemForm()
     return render(request, 'writing.html', {'prb_form':prb_form})
@@ -105,9 +120,11 @@ def signin(request): #로그인 기능
 def signout(request): #로그아웃 기능
     logout(request) 
     return HttpResponseRedirect(reverse('index'))
-
+@login_required
 def mypage(request):
-    return render(request, 'mypage.html')
+    user = request.user
+    unread_messages = user.notifications.unread()
+    return render(request, 'mypage.html', {'unread_messages':unread_messages})
 
 @login_required
 def problem_like(request, problem_detail_key_id):

@@ -8,6 +8,8 @@ class Solution(models.Model):
     body = models.TextField()
     original_date = models.DateTimeField(auto_now=True)
     upload_date = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.title  
     
 class myUser(AbstractUser):
     username = models.CharField(max_length=64,verbose_name = '사용자명', unique=True)
