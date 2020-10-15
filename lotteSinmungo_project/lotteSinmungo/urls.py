@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
+from django.conf.urls import url,include
+import notifications.urls
 # from app.funtion.rankReset import scheduler 
 
 
@@ -36,5 +38,6 @@ urlpatterns = [
     path('mypage/', views.mypage, name='mypage'),
 
     path('like/<int:problem_detail_key_id>', views.problem_like, name='problem_like'),
+    url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
 ]
 # scheduler.start()
