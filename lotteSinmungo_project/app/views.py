@@ -33,6 +33,8 @@ def problemDetail(request, problem_detial_id):
 
 def problemList(request):
     problem_list_item = Problem.objects.all()
+    user = request.user
+    user.notifications.mark_all_as_read()
 
     """--- 랭킹 ---"""
     problem_trending = Problem.objects.order_by('-like_count', '-updated_at')

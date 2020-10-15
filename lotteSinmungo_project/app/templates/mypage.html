@@ -8,6 +8,7 @@
 {% block contents %}
 
 <!-- 이 아래부터는 html 콘텐츠 내용입니다 -->
+<h1>새 알림 목록</h>
 {% for unread_messages in unread_messages.all %}
 <p> {{unread_messages}}</p>
 {{ notifications_tags }}
