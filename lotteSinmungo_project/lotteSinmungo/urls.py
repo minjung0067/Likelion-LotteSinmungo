@@ -29,9 +29,11 @@ urlpatterns = [
     path('solutionDetail/<int:solution_detail_id>', views.solutionDetail, name = "solutionDetail"),
 
     path('problemList/',views.problemList, name = 'problemList'),
-    path('problemDetail/<int:problem_detial_id>', views.problemDetail, name = "problemDetail"),
+    path('problemDetail/<int:problem_detail_id>', views.problemDetail, name = "problemDetail"),
 
     path('writing/',views.writing, name = 'writing'),
+    path('problemUpdate/<int:problem_detail_id>', views.problemUpdate,name='problemUpdate'),
+    path('problemDelete/<int:problem_detail_id>', views.problemDelete,name='problemDelete'),
     path('signup/', views.signup, name='signup'),
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),

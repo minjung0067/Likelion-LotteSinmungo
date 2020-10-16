@@ -27,8 +27,8 @@ def index(request):
         return render(request, 'index.html', {'unread_messages':unread_messages})
     return render(request, 'index.html')
 
-def problemDetail(request, problem_detial_id):
-    problem_detail_obj = get_object_or_404(Problem, pk = problem_detial_id)
+def problemDetail(request, problem_detail_id):
+    problem_detail_obj = get_object_or_404(Problem, pk = problem_detail_id)
     return render(request, 'problem_detail.html', {"problem_detail_key":problem_detail_obj})
 
 def problemList(request):
@@ -66,6 +66,24 @@ def writing(request):
             return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
     prb_form = ProblemForm()
     return render(request, 'writing.html', {'prb_form':prb_form})
+
+def problemUpdate(request,problem_detail_id):
+    post = get_object_or_404(Problem,pk=problem_detail_id)
+
+    if(request.method == 'POST'):
+        form = ProblemForm(request.POST,instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('problemList')
+    else:
+        prb_form = ProblemForm(instance=post)
+    return render(request,'problem_update.html',{'prb_form':prb_form})
+
+def problemDelete(request,problem_detail_id):
+    post = Problem.objects.get(pk=problem_detail_id)
+    post.delete()
+    return redirect('problemList')
+
 
 def signup(request):   #회원가입 기능
     if request.method == "GET":
