@@ -19,37 +19,22 @@
     <a href='/signin'>로그인</a>
     <a href='/signup'>회원가입</a>
 
+    <!-- ranking -->
+    <p>----------------------------</p>
+    <!-- use crontab or Periodic Tasks -->
+
+    {% for k in problem_trending %}
+        <a href= "{% url 'problemDetail' k.id %}"><h1> {{k.title}} ♥:{{k.like_count}}</h1></a>
+
+    {% endfor %}
+    <p>----------------------------</p>
     {% for i in problem_list_item %}
         <a href= "{% url 'problemDetail' i.id %}"><h1> {{i.title}} ♥:{{i.like_count}}</h1></a>
 
     {% endfor %}
 
-<script>
-    // get url query string
-    var getUrlParameter = function getUrlParameter(sParam) {
-        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
-
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : sParameterName[1];
-            }
-        }
-    };
-    // 정렬방식 셀렉트 박스 유지
-    $(document).ready(function(){
-    var sort = getUrlParameter('sort');
-    if(sort == 'many_like'){
-        $('.sort-likes').prop('selected', 'selected')
-    }else{
-        $('.sort-date').prop('selected', 'selected')
-    }
-    });
-
-</script>
+    {% for unread_messages in unread_messages.all %}
+    <p> {{unread_messages}}</p>
+    {% endfor %}
 
 {% endblock contents %}

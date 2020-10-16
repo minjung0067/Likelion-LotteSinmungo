@@ -8,28 +8,39 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.hashers import make_password, check_password 
 from django.http import HttpResponse
-
+from django.db.models import Count
 from django.views.generic.list import ListView
 import json
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-def index(request):
+from django.db.models.signals import post_save
+from notifications.signals import notify
 
+def index(request):
+    lotteadmin = myUser.objects.get(id = 1)
+    recipients = myUser.objects.all()
+    user = request.user
+    if user in recipients:
+        unread_messages = user.notifications.unread()
+        return render(request, 'index.html', {'unread_messages':unread_messages})
     return render(request, 'index.html')
 
-def problemDetail(request, problem_detial_id):
-    problem_detail_obj = get_object_or_404(Problem, pk = problem_detial_id)
+def problemDetail(request, problem_detail_id):
+    problem_detail_obj = get_object_or_404(Problem, pk = problem_detail_id)
     return render(request, 'problem_detail.html', {"problem_detail_key":problem_detail_obj})
 
 def problemList(request):
-    if request.GET.get('sort') == 'many_like':
-        problem_list_item = Problem.objects.all().order_by('updated_at') #order_by를 통해 시간순(최근에서 내림차순) 정렬
-    # elif request.GET.get('sort') == 'many_like':
-    else:
-        problem_list_item = Problem.objects.all().order_by('-title')
-    return render(request, 'problemList.html', {'problem_list_item':problem_list_item})
+    problem_list_item = Problem.objects.all()
+    user = request.user
+    user.notifications.mark_all_as_read()
+
+    """--- 랭킹 ---"""
+    problem_trending = Problem.objects.order_by('-like_count', '-updated_at')
+    problem_trending = problem_trending[:10]
+    """----------- """
+    return render(request, 'problemList.html', {'problem_list_item':problem_list_item,'problem_trending':problem_trending})
 
 # sort 구현 참고용
 # def problemList(request):
@@ -51,15 +62,38 @@ def solutionDetail(request, solution_detail_id):
 
 def writing(request):
     user_id = request.user.id
+    user = request.user #알림 보낼 관리자
+    recipients = myUser.objects.all()  #알림 받을 사람들
     if request.method == "POST":
         filled_form = ProblemForm(request.POST)
         if filled_form.is_valid():
             post = filled_form.save(commit=False)
             post.userid = user_id
             post.save()
+            if user in recipients:
+                unread_messages = user.notifications.unread()
+                notify.send (user, recipient = recipients, verb ='님께서 새로운 숙제를 작성하셨습니다 (●''●)')
             return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
     prb_form = ProblemForm()
     return render(request, 'writing.html', {'prb_form':prb_form})
+
+def problemUpdate(request,problem_detail_id):
+    post = get_object_or_404(Problem,pk=problem_detail_id)
+
+    if(request.method == 'POST'):
+        form = ProblemForm(request.POST,instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('problemList')
+    else:
+        prb_form = ProblemForm(instance=post)
+    return render(request,'problem_update.html',{'prb_form':prb_form})
+
+def problemDelete(request,problem_detail_id):
+    post = Problem.objects.get(pk=problem_detail_id)
+    post.delete()
+    return redirect('problemList')
+
 
 def signup(request):   #회원가입 기능
     if request.method == "GET":
@@ -114,9 +148,11 @@ def signin(request): #로그인 기능
 def signout(request): #로그아웃 기능
     logout(request) 
     return HttpResponseRedirect(reverse('index'))
-
+@login_required
 def mypage(request):
-    return render(request, 'mypage.html')
+    user = request.user
+    unread_messages = user.notifications.unread()
+    return render(request, 'mypage.html', {'unread_messages':unread_messages})
 
 @login_required
 def problem_like(request, problem_detail_key_id):
