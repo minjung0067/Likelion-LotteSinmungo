@@ -7,6 +7,13 @@
 
 {% block contents %}
 
+    <div>
+        <select id="sort-select" onchange="location = this.value;">
+            <option class= "none" value="?sort=none">---</option>
+            <option class= "sort-likes" value="?sort=many_like">공감순</option>
+            <option class= "sort-date'" value="?sort=early_date">최신순</option>
+        </select>
+    </div>
 
     <a href = "{% url 'index' %}">이미지로고자리</a>
     <a href ="{% url 'solution' %}">롯데가해냈어</a>
@@ -18,12 +25,17 @@
     <!-- ranking -->
     <p>----------------------------</p>
     <!-- use crontab or Periodic Tasks -->
-
+    <h1>
+        [여기는 게시물 랭킹순(상위 10개)]
+    </h1>
     {% for k in problem_trending %}
         <a href= "{% url 'problemDetail' k.id %}"><h1> {{k.title}} ♥:{{k.like_count}}</h1></a>
 
     {% endfor %}
     <p>----------------------------</p>
+    <h1>
+        [여기는 그냥 게시물 모음(select box 옵션에 따라 정렬 되는 부분)]
+    </h1>
     {% for i in problem_list_item %}
         <a href= "{% url 'problemDetail' i.id %}"><h1> {{i.title}} ♥:{{i.like_count}}</h1></a>
 
