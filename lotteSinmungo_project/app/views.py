@@ -40,6 +40,15 @@ def problemList(request):
     problem_trending = Problem.objects.order_by('-like_count', '-updated_at')
     problem_trending = problem_trending[:10]
     """----------- """
+
+    """--- 게시물 Sorting ---"""
+    sort = request.GET.get('sort','')
+    if sort=="early_date":
+        problem_list_item = Problem.objects.order_by('-updated_at')
+    elif sort=="many_like":
+        problem_list_item = Problem.objects.order_by('-like_count', '-updated_at')
+    """----------- """        
+    
     return render(request, 'problemList.html', {'problem_list_item':problem_list_item,'problem_trending':problem_trending})
 
 # sort 구현 참고용
