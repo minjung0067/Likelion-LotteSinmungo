@@ -13,7 +13,7 @@
 {% load notifications_tags %}
 {% notifications_unread as unread_count %}
 {% if unread_count %}
-    <strong>{{ unread_count }}</strong> 개의 새로운 숙제가 올라왔어요!
+    <strong>{{ unread_count }}</strong> 개의 새로운 알림이 있어요!
     {{ notifications_tags }}
 
 {% endif %}
