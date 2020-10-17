@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.template.defaultfilters import slugify
 
 class Solution(models.Model):
     objects = models.Manager()
@@ -29,5 +30,15 @@ class Problem (models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     userid = models.IntegerField()
     like_count = models.PositiveIntegerField(default=0)
+    image = models.ImageField(upload_to='images/',blank=True, null=True)
     def __str__(self):
         return self.title
+
+def get_image_filename(instance, filename):
+    title = instance.post.title
+    slug = slugify(title)
+    return "post_images/%s-%s" % (slug, filename)  
+
+class Photo(models.Model):
+    post = models.ForeignKey(Problem, on_delete=models.CASCADE, null=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
