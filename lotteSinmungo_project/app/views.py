@@ -1,7 +1,12 @@
 
 from django.shortcuts import render, redirect , get_object_or_404
+<<<<<<< HEAD
 from .forms import ProblemForm
 from .models import Problem , myUser ,Solution,Photo
+=======
+from .forms import ProblemForm,SolutionForm
+from .models import Problem , myUser ,Solution
+>>>>>>> 0d72ee842b85926467a58288de82f6be31010bd1
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
 from django.contrib.auth.models import User
@@ -19,7 +24,6 @@ from notifications.signals import notify
 from django.forms import modelformset_factory
 
 def index(request):
-    lotteadmin = myUser.objects.get(id = 1)
     recipients = myUser.objects.all()
     user = request.user
     if user in recipients:
@@ -33,9 +37,6 @@ def problemDetail(request, problem_detail_id):
 
 def problemList(request):
     problem_list_item = Problem.objects.all()
-    user = request.user
-    user.notifications.mark_all_as_read()
-
     """--- 랭킹 ---"""
     problem_trending = Problem.objects.order_by('-like_count', '-updated_at')
     problem_trending = problem_trending[:10]
@@ -63,7 +64,24 @@ def problemList(request):
 
 def solution(request):
     solution_item = Solution.objects.all()
-    return render(request, 'solution.html', {'solution_item':solution_item})
+    if request.user.is_authenticated:
+        user = request.user
+        user.notifications.mark_all_as_read()
+        if request.user.is_superuser:
+            user_id = request.user.id
+            recipients = myUser.objects.all()  #알림 받을 사람들
+            if request.method == "POST":
+                filled_form = SolutionForm(request.POST)
+                if filled_form.is_valid():
+                    post = filled_form.save(commit=False)
+                    post.userid = user_id
+                    post.save()
+                    notify.send (user, recipient = recipients, verb ='님이 새로운 문제를 해결했어요')
+            sol_form = SolutionForm()
+            return render(request, 'solution.html', {'sol_form':sol_form,'solution_item':solution_item})
+        return render(request, 'solution.html', {'solution_item':solution_item})
+    else:
+        return render(request, 'solution.html', {'solution_item':solution_item})
 
 def solutionDetail(request, solution_detail_id):
     solution_detail_item = get_object_or_404(Solution, pk = solution_detail_id)
@@ -170,13 +188,13 @@ def signout(request): #로그아웃 기능
 @login_required
 def mypage(request): #마이페이지 #주희가 수정 중!
     user = request.user
-    # unread_messages = user.notifications.unread()
+    unread_messages = user.notifications.unread()
     profile = myUser.objects.get(id=user.id)
-    #내가 쓴 글
+        #내가 쓴 글
     my_problem_item = Problem.objects.filter(userid = user.id)
     #내가 좋아하는 게시물
-    # check_like_post = profile.like_problems.objects.all()
-    return render(request, 'mypage.html', {'my_problem_item': my_problem_item})
+    like_problem = profile.like_problems.all()
+    return render(request, 'mypage.html', {'my_problem_item': my_problem_item, 'like_problem':like_problem, 'unread_messages':unread_messages})
 
 @login_required
 def problem_like(request, problem_detail_key_id):

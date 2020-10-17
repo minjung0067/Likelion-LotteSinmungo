@@ -1,5 +1,5 @@
 
-from .models import Problem
+from .models import Problem,Solution
 from django.contrib.auth.models import User
 from django import forms
 
