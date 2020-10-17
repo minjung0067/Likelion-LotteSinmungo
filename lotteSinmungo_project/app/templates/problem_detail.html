@@ -5,26 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>롯데신문고</title>
 </head>
+<style>
+body{
+    margin: 0;
+}
+
+.top{
+    width: 100%;
+    height: 80px;
+    background-color: #da281c;
+    color: white;
+
+}
+
+.title{
+    border-radius: 200px;
+    border: 0px;
+    color: white;
+    background-color: #da281c;
+    padding : 20px;
+    text-align: center;
+    margin : 10px 400px;
+    font-size: 25px;
+    
+}
+.body{
+    border-color: #da281c;
+    color: black;
+    height: 300px;
+    margin: 0 400px;
+    padding: 30px;
+
+
+}
+.a_tag{
+    text-decoration: none;
+    color: #ffffff;
+    
+}
+
+
+.info{
+    text-align: center;
+    align-items: center;
+    margin: 0 400px 0 0;
+    color: gray;
+    font-size: 17px;
+}
+
+.bottom{
+    height: 30px;
+    width: 100%;
+}
+
+button{
+  border : 0px;
+  border-radius: 20px;
+  color: white;
+  background-color: rgba(233, 94, 94, 0.685);
+  color: white;
+  align-items: center;
+  margin: 0 auto;
+
+}
+</style>
 <body>
-    <a href = "{% url 'problemList' %}">뒤로가기</a>
+<div class = "all">
+    <div class="top">
+    <br>
+    <a href = "{% url 'problemList' %}" class = "a_tag">뒤로가기</a>
     {% if user.is_authenticated %}
         {% if user.id == problem_detail_key.userid %}
-        <a href = "{% url 'problemUpdate' problem_detail_key.id %}">수정하기</a>
-        <a href = "{% url 'problemDelete' problem_detail_key.id %}">삭제하기</a>
+        <a href = "{% url 'problemUpdate' problem_detail_key.id %}"class = "a_tag">수정하기</a>
+        <a href = "{% url 'problemDelete' problem_detail_key.id %}"class = "a_tag">삭제하기</a>
         {% endif %}
     {% endif %}
+</div>
+ 
+    <br><br>
 
-    <h1>{{problem_detail_key.title}} </h1>
-    <p>{{problem_detail_key.body}} </p>
-    <p>{{problem_detail_key.updated_at|date:"Y년 m월 d일"}} 
-    <p>♥:{{problem_detail_key.like_count}}</p>
+    <div class ="title">{{problem_detail_key.title}}</div>
+
+    <div class ="info">
+    <br>
+    <img src = "../static/image/annual-calendar-page.png" width="16px" height="16px" >
+      {{problem_detail_key.updated_at|date:"Y년 m월 d일"}}&nbsp&nbsp|&nbsp
+    <img src = "../static/image/hearts.png" width="16px" height="16px" >
+    {{problem_detail_key.like_count}}
     <a href="{% url 'problem_like' problem_detail_key.id %}">
         {% if problem_detail_key in check_like_post %}
-            취소
+            <button class = "heart">취소</button>
         {% else %}
-            좋아요
+            <button class = "heart">좋아요</button>
         {% endif %}
-    </a>  
+    </a>
+    </div>
+    
+    <div class = "body">
+    <p>{{problem_detail_key.body}} </p>
+    </div>
+    
+</div>  
 </body>
 
 </html>
