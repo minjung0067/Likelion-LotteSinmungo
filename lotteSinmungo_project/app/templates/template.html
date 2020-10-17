@@ -105,8 +105,14 @@
 <body>
     <div class = "container">
         <div class = "upbar">
+            {% if user.is_authenticated %}
+            <<a href="{% url 'mypage' %} " style="color: black; font-size : 15px;">>{{user}}님! 함께 불만을 나눠주세요 :D<a>&emsp;&emsp;&emsp;&emsp;
+            <a href="{% url 'mypage' %} " style="color: black; font-size : 15px;">마이페이지</a>&emsp;&emsp;&emsp;&emsp;
+            <a href="{% url 'signout' %}" style="color: black; font-size : 15px;">로그아웃</a>&emsp;&emsp;&emsp;&emsp;
+            {% else %}
             <a href = "{% url 'signin' %}" style="color: black; font-size : 15px;">로그인</a> &emsp;&emsp;&emsp;&emsp;
             <a href = "{% url 'signup' %}" style="color: black; font-size : 15px;">회원가입</a>&emsp;&emsp;&emsp;&emsp;
+            {% endif %}
             <a style="color: black; font-size : 15px;">F&Q</a>&emsp;&emsp;&emsp;&emsp;
             <a style="color: black; font-size : 15px;">고객센터</a>&emsp;&emsp;&emsp;&emsp;
         </div>
@@ -145,25 +151,6 @@
             <h1></h1>
         </div>
     </div>
-
-    {% if user.is_authenticated %}
-    <p>{{user}}님! 함께 불만을 나눠주세요 :D</p>
-    <a href="{% url 'signout' %}">
-        <button>로그아웃</button>
-    </a>
-    <a href="{% url 'mypage' %}">마이페이지</a>
-
-    {% else %}
-    <a href="{% url 'signup' %}">
-        <button>회원가입</button>
-    </a>
-    <br>
-    <a href="{% url 'signin' %}">
-        <button>로그인</button>
-    </a>
-    <br>
-    {% endif %}
-
 
 <!-- 다른 HTML 파일의 contents block이 삽입되는 부분-->
 {% block contents %}

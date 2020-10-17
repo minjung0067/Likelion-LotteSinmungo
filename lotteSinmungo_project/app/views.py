@@ -14,7 +14,6 @@ import json
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-
 from django.db.models.signals import post_save
 from notifications.signals import notify
 
@@ -157,11 +156,18 @@ def signin(request): #로그인 기능
 def signout(request): #로그아웃 기능
     logout(request) 
     return HttpResponseRedirect(reverse('index'))
+
+
 @login_required
-def mypage(request):
+def mypage(request): #마이페이지 #주희가 수정 중!
     user = request.user
-    unread_messages = user.notifications.unread()
-    return render(request, 'mypage.html', {'unread_messages':unread_messages})
+    # unread_messages = user.notifications.unread()
+    profile = myUser.objects.get(id=user.id)
+    #내가 쓴 글
+    my_problem_item = Problem.objects.filter(userid = user.id)
+    #내가 좋아하는 게시물
+    # check_like_post = profile.like_problems.objects.all()
+    return render(request, 'mypage.html', {'my_problem_item': my_problem_item})
 
 @login_required
 def problem_like(request, problem_detail_key_id):
