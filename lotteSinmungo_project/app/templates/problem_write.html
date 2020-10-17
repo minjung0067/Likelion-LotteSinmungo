@@ -27,9 +27,6 @@
     }
     .contents1 {
         height : 100%;
-        flex-direction: row;
-        align-items: center;
-        text-align: center;
         margin: 100px;
     }
     .upbar{
@@ -47,7 +44,7 @@
         font-size: 32px;
     }
     .form-title{
-        color: aqua;
+        background-color: aqua;
     }
 </style>
 <body>
@@ -59,7 +56,6 @@
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{prb_form.as_p}}
-                <input type="file" name="img" multiple>
                 <input type="submit" value="확인">
             </form>    
         </div>

@@ -1,5 +1,5 @@
 
-from .models import Problem,Solution
+from .models import Problem,Solution,Photo
 from django.contrib.auth.models import User
 from django import forms
 
@@ -9,7 +9,7 @@ class ProblemForm(forms.ModelForm): # 만들어진 모델로부터 폼을 사용
         fields = ('title','body','image')
         widgets = {
         'title': forms.TextInput(attrs={
-            'class': 'form-control', 'style': 'width: 100%', 'placeholder': '제목을 입력하세요.',
+            'class': 'form-title', 'style': 'width: 100%', 'placeholder': '제목을 입력하세요.',
             })
         
         }
@@ -18,6 +18,7 @@ class ProblemForm(forms.ModelForm): # 만들어진 모델로부터 폼을 사용
         self.fields['title'].widget.attrs['maxlegth'] = 100
         self.fields['title'].label = "제목"
         self.fields['body'].label = "불만사항"
+        self.fields['image'].label = "이미지"
 
 class SolutionForm(forms.ModelForm): # 만들어진 모델로부터 폼을 사용
     class Meta:
@@ -29,4 +30,6 @@ class SolutionForm(forms.ModelForm): # 만들어진 모델로부터 폼을 사�
         self.fields['title'].label = "제목"
         self.fields['body'].label = "해결사항"
 
-        
+class PhotoUploadForm(forms.Form):
+    """Image upload form.""" 
+    image = forms.ImageField()

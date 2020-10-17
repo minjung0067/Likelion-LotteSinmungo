@@ -87,21 +87,16 @@ def problemWrite(request):
     user = request.user #알림 보낼 관리자
     recipients = myUser.objects.all()  #알림 받을 사람들\
     if request.method == "POST":
-        filled_form = ProblemForm(request.POST)
+        filled_form = ProblemForm(request.POST, request.FILES)
         if filled_form.is_valid():
             post = filled_form.save(commit=False)
             post.userid = user_id
             post.save()
-            for img in request.FILES.getlist('imgs'):
-                photo = Photo()
-                photo.post = post
-                photo.image = img
-                photo.save()
             
-            if user in recipients:
-                unread_messages = user.notifications.unread()
-                notify.send (user, recipient = recipients, verb ='님께서 새로운 숙제를 작성하셨습니다 (●''●)')
-            return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
+        if user in recipients:
+            unread_messages = user.notifications.unread()
+            notify.send (user, recipient = recipients, verb ='님께서 새로운 숙제를 작성하셨습니다 (●''●)')
+        return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
 
     else:
         prb_form = ProblemForm()
