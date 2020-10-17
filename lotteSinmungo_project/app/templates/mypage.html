@@ -19,6 +19,7 @@
 <!-- 이 아래부터는 html 콘텐츠 내용입니다 -->
 {% if user.is_authenticated %}
     <h1>새 알림 목록</h>
+        
     {% for unread_messages in unread_messages.all %}
     <p> {{unread_messages}}</p>
     {{ notifications_tags }}
@@ -26,13 +27,13 @@
     
     <h2>좋아요한 불만사항</h2>
     {% for like_item in like_problem %}
-        <p>{{like_item.title}}</p>
+        <a href= "{% url 'problemDetail' like_item.id %}">{{like_item.title}}</a>
     {% endfor %}
 
     <!-- for구문지우기 -->
     <h2>내가 작성한 불만사항</h2>
     {% for probl_item in my_problem_item %}
-        <p>{{probl_item.title}}</p>
+        <a href= "{% url 'problemDetail' probl_item.id %}">{{probl_item.title}}</a>
     {% endfor %}
     
 
