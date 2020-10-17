@@ -173,11 +173,11 @@ def mypage(request): #마이페이지 #주희가 수정 중!
     user = request.user
     unread_messages = user.notifications.unread()
     profile = myUser.objects.get(id=user.id)
-    #내가 쓴 글
+        #내가 쓴 글
     my_problem_item = Problem.objects.filter(userid = user.id)
     #내가 좋아하는 게시물
-    # check_like_post = profile.like_problems.objects.all()
-    return render(request, 'mypage.html', {'my_problem_item': my_problem_item,'unread_messages':unread_messages})
+    like_problem = profile.like_problems.all()
+    return render(request, 'mypage.html', {'my_problem_item': my_problem_item, 'like_problem':like_problem, 'unread_messages':unread_messages})
 
 @login_required
 def problem_like(request, problem_detail_key_id):
