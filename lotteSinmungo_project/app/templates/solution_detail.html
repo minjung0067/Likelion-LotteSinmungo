@@ -1,14 +1,99 @@
-{% extends "template.html" %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>롯데신문고</title>
+</head>
+<style>
+body{
+    margin: 0;
+}
 
-{% load static %}
+.top{
+    width: 100%;
+    height: 80px;
+    background-color: #da281c;
+    color: white;
 
-{% block title %}
-<title>롯데신문고</title>
-{% endblock title %}
+}
 
-{% block contents %}
+.title{
+    border-radius: 200px;
+    border: 0px;
+    color: white;
+    background-color: #da281c;
+    padding : 20px;
+    text-align: center;
+    margin : 10px 400px;
+    font-size: 25px;
+    
+}
+.body{
+    border-color: #da281c;
+    color: black;
+    height: 300px;
+    margin: 0 400px;
+    padding: 30px;
 
-    <h1> {{solution_detail_item.title}}</h1>
-    <h1> {{solution_detail_item.body}}</h1>
 
-{% endblock contents %}
+}
+.a_tag{
+    text-decoration: none;
+    color: #ffffff;
+    
+}
+
+
+.info{
+    text-align: center;
+    align-items: center;
+    margin: 0 250px 0 0;
+    color: gray;
+    font-size: 17px;
+}
+
+.bottom{
+    height: 30px;
+    width: 100%;
+}
+
+button{
+  border : 0px;
+  border-radius: 20px;
+  color: white;
+  background-color: rgba(233, 94, 94, 0.685);
+  color: white;
+  align-items: center;
+  margin: 0 auto;
+
+}
+</style>
+<body>
+<div class = "all">
+    <div class="top">
+    <br>
+    <a href = "{% url 'problemList' %}" class = "a_tag">뒤로가기</a>
+    
+</div>
+ 
+    <br><br>
+
+    <div class ="title">{{solution_detail_item.title}}</div>
+
+    <div class ="info">
+    <br>
+
+    <img src = "../static/image/solution.png" width="16px" height="16px" >
+    여러분이 선정한 불만사항에 대해 답변을 드리겠습니다!
+    
+    </div>
+    
+    <div class = "body">
+    <p>{{solution_detail_item.body}} </p>
+    </div>
+    
+</div>  
+</body>
+
+</html>
