@@ -1,6 +1,6 @@
 
 from django.shortcuts import render, redirect , get_object_or_404
-from .forms import ProblemForm
+from .forms import ProblemForm,SolutionForm
 from .models import Problem , myUser ,Solution
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
@@ -61,7 +61,24 @@ def problemList(request):
 
 def solution(request):
     solution_item = Solution.objects.all()
-    return render(request, 'solution.html', {'solution_item':solution_item})
+    if request.user.is_superuser:
+        user_id = request.user.id
+        user = request.user #알림 보낼 관리자
+        recipients = myUser.objects.all()  #알림 받을 사람들
+        if request.method == "POST":
+            filled_form = SolutionForm(request.POST)
+            if filled_form.is_valid():
+                post = filled_form.save(commit=False)
+                post.userid = user_id
+                post.save()
+                if user in recipients:
+                    unread_messages = user.notifications.unread()
+                    notify.send (user, recipient = recipients, verb ='님께서 새로운 숙제를 작성하셨습니다 (●''●)')
+            
+        sol_form = SolutionForm()
+        return render(request, 'solution.html', {'sol_form':sol_form})
+    else:
+        return render(request, 'solution.html', {'solution_item':solution_item})
 
 def solutionDetail(request, solution_detail_id):
     solution_detail_item = get_object_or_404(Solution, pk = solution_detail_id)
