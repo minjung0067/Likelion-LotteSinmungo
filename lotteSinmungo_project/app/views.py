@@ -18,7 +18,6 @@ from django.db.models.signals import post_save
 from notifications.signals import notify
 
 def index(request):
-    lotteadmin = myUser.objects.get(id = 1)
     recipients = myUser.objects.all()
     user = request.user
     if user in recipients:
