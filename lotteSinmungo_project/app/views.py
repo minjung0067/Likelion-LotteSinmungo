@@ -18,7 +18,6 @@ from django.db.models.signals import post_save
 from notifications.signals import notify
 
 def index(request):
-    lotteadmin = myUser.objects.get(id = 1)
     recipients = myUser.objects.all()
     user = request.user
     if user in recipients:
@@ -32,9 +31,9 @@ def problemDetail(request, problem_detail_id):
 
 def problemList(request):
     problem_list_item = Problem.objects.all()
-    user = request.user
-    user.notifications.mark_all_as_read()
-
+    if request.user.is_authenticated:
+        user = request.user
+        user.notifications.mark_all_as_read()
     """--- 랭킹 ---"""
     problem_trending = Problem.objects.order_by('-like_count', '-updated_at')
     problem_trending = problem_trending[:10]
