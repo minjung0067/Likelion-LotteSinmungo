@@ -8,9 +8,6 @@
 {% block contents %}
 <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap.min.css' %}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-
-
     <div>
         <select id="sort-select" onchange="location = this.value;">
             <option class= "none" value="?sort=none">---</option>
@@ -19,6 +16,15 @@
         </select>
     </div>
 
+<<<<<<< HEAD
+=======
+    <a href = "{% url 'index' %}">이미지로고자리</a>
+    <a href ="{% url 'solution' %}">롯데가해냈어</a>
+    <a href ="{% url 'problemList' %}">롯데의숙제들</a>
+    <a href ="{% url 'writing' %}">롯데에게말해줘</a>
+    <a href='/signin'>로그인</a>
+    <a href='/signup'>회원가입</a> -->
+>>>>>>> 63bbb5bacf227d6f17877401d5f9ef5a0a6e7c01
 
     <!-- ranking -->
         <!-- use crontab or Periodic Tasks -->
