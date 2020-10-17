@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect , get_object_or_404
+from .models import Problem , myUser ,Solution,Photo
 from .forms import ProblemForm,SolutionForm
-from .models import Problem , myUser ,Solution
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
 from django.contrib.auth.models import User
@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.db.models.signals import post_save
 from notifications.signals import notify
+from django.forms import modelformset_factory
 
 def index(request):
     recipients = myUser.objects.all()
@@ -81,19 +82,30 @@ def solutionDetail(request, solution_detail_id):
     solution_detail_item = get_object_or_404(Solution, pk = solution_detail_id)
     return render(request, 'solution_detail.html', {"solution_detail_item":solution_detail_item})
 
-def writing(request):
+def problemWrite(request):
     user_id = request.user.id
     user = request.user #알림 보낼 관리자
-    recipients = myUser.objects.all()  #알림 받을 사람들
+    recipients = myUser.objects.all()  #알림 받을 사람들\
     if request.method == "POST":
         filled_form = ProblemForm(request.POST)
         if filled_form.is_valid():
             post = filled_form.save(commit=False)
             post.userid = user_id
             post.save()
+            for img in request.FILES.getlist('imgs'):
+                photo = Photo()
+                photo.post = post
+                photo.image = img
+                photo.save()
+            
+            if user in recipients:
+                unread_messages = user.notifications.unread()
+                notify.send (user, recipient = recipients, verb ='님께서 새로운 숙제를 작성하셨습니다 (●''●)')
             return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
-    prb_form = ProblemForm()
-    return render(request, 'writing.html', {'prb_form':prb_form})
+
+    else:
+        prb_form = ProblemForm()
+    return render(request, 'problem_write.html', {'prb_form':prb_form})
 
 def problemUpdate(request,problem_detail_id):
     post = get_object_or_404(Problem,pk=problem_detail_id)
