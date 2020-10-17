@@ -6,18 +6,16 @@
 <title>롯데신문고</title>
 {% endblock title %}
 
-{% block contents %}
+{% block contents %}    
+
+{% if request.user.is_superuser %}
+    <a href= "{% url 'sol_writing' %}"> 글쓰기 </a>
+    {% endif %}
+
     {% for solution in solution_item.all %}
     <a href= "{% url 'solutionDetail' solution.id %}">
         <h1> {{solution.title}}</h1>
     </a>
     {% endfor %}
     
-    {% if request.user.is_superuser %}
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{sol_form.as_p}}
-        <input type="submit" value="확인">
-    </form>
-    {% endif %}
 {% endblock contents %}
