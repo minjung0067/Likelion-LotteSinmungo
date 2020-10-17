@@ -1,12 +1,7 @@
 
 from django.shortcuts import render, redirect , get_object_or_404
-<<<<<<< HEAD
-from .forms import ProblemForm
 from .models import Problem , myUser ,Solution,Photo
-=======
 from .forms import ProblemForm,SolutionForm
-from .models import Problem , myUser ,Solution
->>>>>>> 0d72ee842b85926467a58288de82f6be31010bd1
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
 from django.contrib.auth.models import User
