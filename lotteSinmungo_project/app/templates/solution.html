@@ -9,7 +9,13 @@
 {% block contents %}    
 
 {% if request.user.is_superuser %}
-    <a href= "{% url 'solWrite' %}"> 글쓰기 </a>
+    <a href= "{% url 'solWrite' %}" style="border : 0px;
+    border-radius: 20px;
+    color: white;
+    background-color: rgba(233, 94, 94, 0.685);
+    color: white;
+    align-items: center;
+    margin: 0 auto;"> 글쓰기 </a>
     {% endif %}
 
     {% for solution in solution_item.all %}
