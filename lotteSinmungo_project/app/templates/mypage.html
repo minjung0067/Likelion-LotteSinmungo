@@ -1,44 +1,154 @@
 <style>
-*{
-    margin: 0px;
-    padding: 0px;
-    color: green;
+    .container{
+        max-width: 1180px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .title{
+        display: flex;
+        margin: 72px 10px 3px;
+    }
+    .top{
+        
+        font-size: 20px;
+        font-weight: bold;
+        color: rgb(27, 28, 29);
+        line-height: 34px;
+        letter-spacing: -0.4px;
+        margin: 0px;
+    }
+    
+    .content{
+        display: grid;
+        grid-template-columns: repeat(3,calc(33.33333% - 30px));
+        grid-row-gap: 50px;
+        grid-column-gap: 50px;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        width: 100%;
+        padding: 20px 0px 20px;
     }
 
-
-</style>
-
-{% extends "template.html" %}
-{% load static %}
-{% load notifications_tags %}
-{% block title %}
-<title>롯데신문고</title>
-{% endblock title %}
-
-{% block contents %}
-<!-- 이 아래부터는 html 콘텐츠 내용입니다 -->
-{% if user.is_authenticated %}
-    <h1>새 알림 목록</h>
+    .a{
+        align-items: center;
+        float: left; 
+        text-decoration: none;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        vertical-align: baseline;
+        font: inherit;
+        box-sizing: border-box;
+        height: 225px;
+        overflow: hidden;
+    }
+    .prob_box{
+        width: 100%;
+        text-align: left;
+        position: relative;
+    }
+    .img_sec{
+        position: relative;
+        width: 100%;
+    }
+    .info_sec{
+        text-align: center;
+        color: black;
+        text-decoration: none;
+        position: relative;
+        height: 30px;
+        padding: 0 20px;
+        border-top: none;
+    }
+    .lotte_image{
+        position: fixed;
+        align-items: center;
+        right:200px;
+        bottom: 10px;
+        opacity: 70%;
+        padding-bottom: 50px;
+        z-index: -1;
+    }
+    
+    .problem_box{
+        display: inline-block;
+    }
+    
+    </style>
+    
+    {% extends "template.html" %}
+    {% load static %}
+    {% load notifications_tags %}
+    {% block title %}
+    <title>롯데신문고</title>
+    {% endblock title %}
+    
+    {% block contents %}
+    <!-- 이 아래부터는 html 콘텐츠 내용입니다 -->
+    {% if user.is_authenticated %}
+    <div class = "container">
+        <div class = "title">
+            <p class="top">새 알림</p>
+        </div>
         
-    {% for unread_messages in unread_messages.all %}
-    <p> {{unread_messages}}</p>
-    {{ notifications_tags }}
-    {% endfor %}
+        <div class = "content">
+            {% for unread_messages in unread_messages.all %}
+            <p class="notify"> {{unread_messages}}</p>
+            {{ notifications_tags }}
+            {% endfor %}
+        </div>
     
-    <h2>좋아요한 불만사항</h2>
-    {% for like_item in like_problem %}
-        <a href= "{% url 'problemDetail' like_item.id %}">{{like_item.title}}</a>
-    {% endfor %}
-
-    <!-- for구문지우기 -->
-    <h2>내가 작성한 불만사항</h2>
-    {% for probl_item in my_problem_item %}
-        <a href= "{% url 'problemDetail' probl_item.id %}">{{probl_item.title}}</a>
-    {% endfor %}
+        <div class = "title">
+            <p class="top">좋아요한 글</p>
+        </div>
+        
+        <div class = "content">
+            {% for like_item in like_problem %}
+                <div class = "problem_box">
+                    <a href= "{% url 'problemDetail' like_item.id %}">
+                        <div class = "probl_box">
+                            <img class="img_sec" src="{{like_item.image.url}}"style="width:200px; height: 200px;">
+                            <div class = "info_sec">
+                                {{like_item.title}}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}                
+        </div>    
     
+        <div class = "title">
+            <p class="top">내가 작성한 글</p>
+        </div>
+    
+        <div class = "content">
+            {% for probl_item in my_problem_item %}
+            <div class = "problem_box">
+                <a href= "{% url 'problemDetail' probl_item.id %}">
+                    <div class = "probl_box">
+                        <img class="img_sec" src="{{probl_item.image.url}}"style="width:200px; height: 200px;">
+                        <div class = "info_sec">
+                            {{probl_item.title}}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}   
 
-{% else %}
-<p>로그인이 필요한 서비스입니다</p>
-{% endif %}
 
-{% endblock contents %}
+        <div>
+            <img class="lotte_image" src = "../static/image/롯문고 캐릭터.png" width = "400px" height = "400px">
+        </div>
+
+    
+    {% else %}
+    <p>로그인이 필요한 서비스입니다</p>
+    {% endif %}
+    </div>
+    
+    
+    {% endblock contents %}
+    
