@@ -1,3 +1,4 @@
+  
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -5,21 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}
     {% endblock title %}
-    <link href="'https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap.min.css' %}">
+
 </head>
 
 <style>
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
 
     * {
     margin: 0px;
     padding: 0px;
     }
     #a { text-decoration:none }
+
     .body {
         display : flex;
         height : 1080px;
         font-family: 'Nanum Gothic Coding', monospace;
         }
+
     .container-fluid {
         flex-direction: column;
     }
@@ -30,6 +40,7 @@
         text-align: right;
         padding-top: 15px;
         }
+        
     .bar{
         width : 100%;
         height : 300px;
@@ -145,10 +156,10 @@
 
 <!-- 항상 Body에 존재하는 상단 메뉴 부분-->
 <body>
-    <div class = "container">
-        <div class = "upbar">
+    <div class = "container-fluid">
+        <div class = "navbar navbar-light bg-light">
             {% if user.is_authenticated %}
-            <<a href="{% url 'mypage' %} " style="color: black; font-size : 15px;">>{{user}}님! 함께 불만을 나눠주세요 :D<a>&emsp;&emsp;&emsp;&emsp;
+            <a href="{% url 'mypage' %} " style="color: black; font-size : 15px;">{{user}}님! 함께 불만을 나눠주세요 :D<a>&emsp;&emsp;&emsp;&emsp;
             <a href="{% url 'mypage' %} " style="color: black; font-size : 15px; text-decoration: none;">마이페이지</a>&emsp;&emsp;&emsp;&emsp;
             <a href="{% url 'signout' %}" style="color: black; font-size : 15px; text-decoration: none;">로그아웃</a>&emsp;&emsp;&emsp;&emsp;
             {% else %}
@@ -160,7 +171,12 @@
         </div>
         <div class = "bar">
             <div class = "logo">
-                <img src = "../static/image/mainlogo.png" width = "790px" height = "160px">
+
+                <a href = "{% url 'index' %}">
+                    <img src = "../static/image/mainlogo.png" width = "790px" height = "160px">
+                </a>
+                
+
             </div>
             <div class = "m_bar">
                 <a href ="{% url 'solution' %}" style="color: white; font-size : 30px;text-decoration: none;">롯데가 해냈어</a>
