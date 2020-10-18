@@ -16,6 +16,7 @@ from django.views.decorators.http import require_POST
 from django.db.models.signals import post_save
 from notifications.signals import notify
 from django.forms import modelformset_factory
+from django.core.paginator import Paginator
 
 def index(request):
     recipients = myUser.objects.all()
@@ -47,19 +48,15 @@ def problemList(request):
         problem_list_item = Problem.objects.order_by('-updated_at')
     elif sort=="many_like":
         problem_list_item = Problem.objects.order_by('-like_count', '-updated_at')
+    else:
+        problem_list_item = Problem.objects.order_by('-updated_at')
     """----------- """        
     
-    return render(request, 'problemList.html', {'problem_list_item':problem_list_item,'problem_trending':problem_trending})
+    page = int(request.GET.get('p', 1)) #현재 페이지 할당
+    paginator = Paginator(problem_list_item, 15) #페이지당 보여줄 게시물
+    problem_list_item = paginator.get_page(page)
 
-# sort 구현 참고용
-# def problemList(request):
-#     sort = request.GET.get('sort', '')
-#     if sort == 'many_like':
-#         problem_list_item = Problem.objects.annotate(like_count = count('many_like')).order_by('-like_count', '-update_date')
-#         return render(request, 'problemList.html', {'problem_list_item':problem_list_item})
-#     elif sort == 'early_date':
-#         problem_list_item = Problem.objects.order_by('-update_date')
-#         return render(request, 'problemList.html', {'problem_list_item':problem_list_item})
+    return render(request, 'problemList.html', {'problem_list_item':problem_list_item,'problem_trending':problem_trending})
 
 def solution(request):
     solution_item = Solution.objects.all()
