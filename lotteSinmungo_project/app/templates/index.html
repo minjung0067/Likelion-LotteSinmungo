@@ -12,19 +12,19 @@
             <div class = "l_container">
                 <div class="contextBox" style="text-align: left; background-color:#f5f5f5;
                 width: 500px; height: 300px; border-radius: 20px; margin: 80px; padding: 30px;">
-                <p style="font-size: 26px; margin: 0 0 30px 0; color: #DA291C; font-weight : bold;">Monthly Best</p>
+                <p style="font-size: 26px; margin: 0 0 20px 0; color: #DA291C; font-weight : bold;">Monthly Best</p>
                 {% for k in problem_trending %}
                     <tr>
                         <p style="font-size: 13px; color: rgb(110, 110, 110); margin: 10px 0;">{{ k.updated_at|date:"Y년 m월 d일"}}</p>
                         <td>
-                            <a href= "{% url 'problemDetail' k.id %}" style="font-size: 17px; text-decoration: none; color: black;margin: 10px 0;">{{k.title}}&emsp;</a>
+                            <a href= "{% url 'problemDetail' k.id %}" style="font-size: 17px; text-decoration: none; color: black;margin: 5px 0;">{{k.title}}&emsp;</a>
                         </td>
                         
                         <td>
-                            <img src = "../static/image/hearts.png" width="16px" height="16px" ><a href= "{% url 'problemDetail' k.id %}" style="font-size: 17px; text-decoration: none; color: black; margin: 10px 0; ">{{ k.like_count }}</a>
+                            <img src = "../static/image/redHeart.png" width="17px" height="17px" >&emsp;<a href= "{% url 'problemDetail' k.id %}" style="font-size: 17px; text-decoration: none; color: black; margin: 5px 0; ">{{ k.like_count }}</a>
                         </td>
 
-                        <br><br>
+                        <br>
                         {% endfor %}</div>
             </div>
             <div class = "r_container">
