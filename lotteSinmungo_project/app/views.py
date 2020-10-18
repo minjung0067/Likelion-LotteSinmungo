@@ -16,6 +16,7 @@ from django.views.decorators.http import require_POST
 from django.db.models.signals import post_save
 from notifications.signals import notify
 from django.forms import modelformset_factory
+from django.core.paginator import Paginator
 
 def index(request):
     recipients = myUser.objects.all()
@@ -26,7 +27,7 @@ def index(request):
     problem_trending = problem_trending[:3]
     if user in recipients:
         unread_messages = user.notifications.unread()
-        return render(request, 'index.html', {'unread_messages':unread_messages})
+        return render(request, 'index.html', {'unread_messages':unread_messages,'problem_trending':problem_trending})
     return render(request, 'index.html',{'problem_trending':problem_trending})
 
 
@@ -47,19 +48,15 @@ def problemList(request):
         problem_list_item = Problem.objects.order_by('-updated_at')
     elif sort=="many_like":
         problem_list_item = Problem.objects.order_by('-like_count', '-updated_at')
+    else:
+        problem_list_item = Problem.objects.order_by('-updated_at')
     """----------- """        
     
-    return render(request, 'problemList.html', {'problem_list_item':problem_list_item,'problem_trending':problem_trending})
+    page = int(request.GET.get('p', 1)) #현재 페이지 할당
+    paginator = Paginator(problem_list_item, 15) #페이지당 보여줄 게시물
+    problem_list_item = paginator.get_page(page)
 
-# sort 구현 참고용
-# def problemList(request):
-#     sort = request.GET.get('sort', '')
-#     if sort == 'many_like':
-#         problem_list_item = Problem.objects.annotate(like_count = count('many_like')).order_by('-like_count', '-update_date')
-#         return render(request, 'problemList.html', {'problem_list_item':problem_list_item})
-#     elif sort == 'early_date':
-#         problem_list_item = Problem.objects.order_by('-update_date')
-#         return render(request, 'problemList.html', {'problem_list_item':problem_list_item})
+    return render(request, 'problemList.html', {'problem_list_item':problem_list_item,'problem_trending':problem_trending})
 
 def solution(request):
     solution_item = Solution.objects.all()
@@ -75,18 +72,21 @@ def solutionDetail(request, solution_detail_id):
     return render(request, 'solution_detail.html', {"solution_detail_item":solution_detail_item})
 
 def problemWrite(request):
-    user_id = request.user.id
-    if request.method == "POST":
-        filled_form = ProblemForm(request.POST, request.FILES)
-        if filled_form.is_valid():
-            post = filled_form.save(commit=False)
-            post.userid = user_id
-            post.save()
-        return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        if request.method == "POST":
+            filled_form = ProblemForm(request.POST, request.FILES)
+            if filled_form.is_valid():
+                post = filled_form.save(commit=False)
+                post.userid = user_id
+                post.save()
+            return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
 
+        else:
+            prb_form = ProblemForm()
+        return render(request, 'problem_write.html', {'prb_form':prb_form})
     else:
-        prb_form = ProblemForm()
-    return render(request, 'problem_write.html', {'prb_form':prb_form})
+        return render(request,'signin.html')
 
 def solWrite(request):
     solution_item = Solution.objects.all()
