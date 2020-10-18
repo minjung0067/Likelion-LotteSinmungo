@@ -6,8 +6,7 @@
 {% endblock title %}
 
 {% block contents %}
-<link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap.min.css' %}">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
     <div>
         <select id="sort-select" onchange="location = this.value;">
             <option class= "none" value="?sort=none">---</option>
@@ -15,13 +14,6 @@
             <option class= "sort-date'" value="?sort=early_date">최신순</option>
         </select>
     </div>
-
-    <a href = "{% url 'index' %}">이미지로고자리</a>
-    <a href ="{% url 'solution' %}">롯데가해냈어</a>
-    <a href ="{% url 'problemList' %}">롯데의숙제들</a>
-    <a href ="{% url 'problemWrite' %}">롯데에게말해줘</a>
-    <a href='/signin'>로그인</a>
-    <a href='/signup'>회원가입</a> -->
 
     <!-- ranking -->
         <!-- use crontab or Periodic Tasks -->
@@ -47,7 +39,7 @@
                 <td>
                     {{ k.like_count }}
                 </td>
-                <td>{{ k.updated_at }}</td>
+                <td>{{ k.updated_at|date:"Y년 m월 d일"}}</td>
                 {% endfor %}
             </tr>
         </tbody>
@@ -81,6 +73,18 @@
         </tr>
     </tbody>
     </table>    
+
+
+
+            </div>
+            <div class = "rd_container">
+            </div>
+        </div> 
+    </div>
+    <div class = "footer">
+        <h1></h1>
+    </div>
+</div>
 
     {% for unread_messages in unread_messages.all %}
     <p> {{unread_messages}}</p>
