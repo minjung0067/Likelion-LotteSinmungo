@@ -10,6 +10,7 @@
         margin: 72px 10px 3px;
     }
     .top{
+        
         font-size: 20px;
         font-weight: bold;
         color: rgb(27, 28, 29);
@@ -19,8 +20,10 @@
     }
     
     .content{
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(3,calc(33.33333% - 30px));
+        grid-row-gap: 50px;
+        grid-column-gap: 50px;
         -webkit-box-align: center;
         align-items: center;
         -webkit-box-pack: center;
@@ -30,22 +33,49 @@
     }
 
     .a{
+        align-items: center;
+        float: left; 
+        text-decoration: none;
         margin: 0;
         border: 0;
         padding: 0;
         vertical-align: baseline;
         font: inherit;
         box-sizing: border-box;
+        height: 225px;
+        overflow: hidden;
+    }
+    .prob_box{
+        width: 100%;
+        text-align: left;
+        position: relative;
+    }
+    .img_sec{
+        position: relative;
+        width: 100%;
+    }
+    .info_sec{
+        text-align: center;
+        color: black;
+        text-decoration: none;
+        position: relative;
+        height: 30px;
+        padding: 0 20px;
+        border-top: none;
     }
     .lotte_image{
-        position: absolute;
+        position: fixed;
         align-items: center;
-        top: 400px;
-        opacity: 50%;
-        padding-top: 50px;
+        right:200px;
+        bottom: 10px;
+        opacity: 70%;
         padding-bottom: 50px;
+        z-index: -1;
     }
     
+    .problem_box{
+        display: inline-block;
+    }
     
     </style>
     
@@ -72,25 +102,45 @@
         </div>
     
         <div class = "title">
-            <p class="top">좋아요한 불만사항</p>
+            <p class="top">좋아요한 글</p>
         </div>
         
-        <div class = "content">         
-                {% for like_item in like_problem %}
-                <a href= "{% url 'problemDetail' like_item.id %}">{{like_item.title}}</a>
-                {% endfor %}
-        </div>
+        <div class = "content">
+            {% for like_item in like_problem %}
+                <div class = "problem_box">
+                    <a href= "{% url 'problemDetail' like_item.id %}">
+                        <div class = "probl_box">
+                            <img class="img_sec" src="{{like_item.image.url}}"style="width:200px; height: 200px;">
+                            <div class = "info_sec">
+                                {{like_item.title}}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}                
+        </div>    
     
         <div class = "title">
-            <p class="top">내가 작성한 불만사항</p>
+            <p class="top">내가 작성한 글</p>
         </div>
     
         <div class = "content">
             {% for probl_item in my_problem_item %}
-            <a href= "{% url 'problemDetail' probl_item.id %}">{{probl_item.title}}</a>
-            {% endfor %}
-        <div >
-            <img class="lotte_image" src = "../static/image/롯문고 캐릭터.png" width = "650px" height = "600px">
+            <div class = "problem_box">
+                <a href= "{% url 'problemDetail' probl_item.id %}">
+                    <div class = "probl_box">
+                        <img class="img_sec" src="{{probl_item.image.url}}"style="width:200px; height: 200px;">
+                        <div class = "info_sec">
+                            {{probl_item.title}}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}   
+
+
+        <div>
+            <img class="lotte_image" src = "../static/image/롯문고 캐릭터.png" width = "400px" height = "400px">
         </div>
 
     
