@@ -19,11 +19,7 @@ from notifications.signals import notify
 from django.forms import modelformset_factory
 
 def index(request):
-    recipients = myUser.objects.all()
-    user = request.user
-    if user in recipients:
-        unread_messages = user.notifications.unread()
-        return render(request, 'index.html', {'unread_messages':unread_messages})
+
     return render(request, 'index.html')
 
 def problemDetail(request, problem_detail_id):
