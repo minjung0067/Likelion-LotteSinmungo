@@ -7,53 +7,55 @@
 {% endblock title %}
 
 {% block contents %}
-<div class = "m_container">
-    <div class = "l_container">
-        <div class="contextBox" style="text-align: left; background-color:#f5f5f5;
-        width: 500px; height: 300px; border-radius: 20px; margin: 80px; padding: 30px;">
-        <p style="font-size: 26px; margin: 0 0 30px 0; color: #DA291C; font-weight : bold;">Monthly Best</p>
-        {% for k in problem_trending %}
-            <tr>
-                <p style="font-size: 13px; color: rgb(110, 110, 110); margin: 10px 0;">{{ k.updated_at|date:"Y년 m월 d일"}}</p>
-                <td>
-                    <a href= "{% url 'problemDetail' k.id %}" style="font-size: 17px; text-decoration: none; color: black;margin: 10px 0;">{{k.title}}&emsp;</a>
-                </td>
-                
-                <td>
-                    <img src = "../static/image/hearts.png" width="16px" height="16px" ><a href= "{% url 'problemDetail' k.id %}" style="font-size: 17px; text-decoration: none; color: black; margin: 10px 0; ">{{ k.like_count }}</a>
-                </td>
+<div class = "container-fluid">
+        <div class = "m_container">
+            <div class = "l_container">
+                <div class="contextBox" style="text-align: left; background-color:#f5f5f5;
+                width: 500px; height: 300px; border-radius: 20px; margin: 80px; padding: 30px;">
+                <p style="font-size: 26px; margin: 0 0 30px 0; color: #DA291C; font-weight : bold;">Monthly Best</p>
+                {% for k in problem_trending %}
+                    <tr>
+                        <p style="font-size: 13px; color: rgb(110, 110, 110); margin: 10px 0;">{{ k.updated_at|date:"Y년 m월 d일"}}</p>
+                        <td>
+                            <a href= "{% url 'problemDetail' k.id %}" style="font-size: 17px; text-decoration: none; color: black;margin: 10px 0;">{{k.title}}&emsp;</a>
+                        </td>
+                        
+                        <td>
+                            <img src = "../static/image/hearts.png" width="16px" height="16px" ><a href= "{% url 'problemDetail' k.id %}" style="font-size: 17px; text-decoration: none; color: black; margin: 10px 0; ">{{ k.like_count }}</a>
+                        </td>
 
-                <br><br>
-                {% endfor %}</div>
-    </div>
-    <div class = "r_container">
-        <div class = "ru_container">
-            <div class = "rul_container">
-                <br><br><a style  = "color : gray; font-size : 20px; font-weight : bold;">롯데그룹은 고객의 목소리를 듣습니다.</a><br><br>
-                <a style = "color : gray; font-size : 18px;">롯데 신문고에 방문해주셔서 감사합니다. <br>
-                무엇이든 말씀해주세요 ! </a>
+                        <br><br>
+                        {% endfor %}</div>
             </div>
-            <div class = "rur_container">
-                <a href="{% url 'signin' %}">                       
-                    <div class = "button">Sign In</div>
-                    <br><br>
-                <a href="{% url 'signup' %}">
-                    <div class = "button">Sing Up</div>
-                </a>   
-            </div>
+            <div class = "r_container">
+                <div class = "ru_container">
+                    <div class = "rul_container">
+                        <br><br><a style  = "color : gray; font-size : 20px; font-weight : bold;">롯데그룹은 고객의 목소리를 듣습니다.</a><br><br>
+                        <a style = "color : gray; font-size : 18px;">롯데 신문고에 방문해주셔서 감사합니다. <br>
+                        무엇이든 말씀해주세요 ! </a>
+                    </div>
+                    <div class = "rur_container">
+                        <a href="{% url 'signin' %}">                       
+                            <div class = "button">Sign In</div>
+                            <br><br>
+                        <a href="{% url 'signup' %}">
+                            <div class = "button">Sing Up</div>
+                        </a>   
+                    </div>
+                </div>
+                <div class = "rd_container">
+                    <img src = "static/image/롯문고 캐릭터.png" width = "300px" height = "250px">
+                </div>
+            </div> 
         </div>
-        <div class = "rd_container">
-            <img src = "static/image/롯문고 캐릭터.png" width = "300px" height = "250px">
+
+
+        <div class = "footer">
+            <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">About&emsp;</a>
+            <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">Developer&emsp;</a>
+            <a href= "https://www.lotteon.com/p/customer/customerCenter/customerMain#" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">FamilySite&emsp;</a>
+
         </div>
-    </div> 
-</div>
-</div>
-
-<div class = "footer">
-    <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">About&emsp;</a>
-    <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">Developer&emsp;</a>
-    <a href= "https://www.lotteon.com/p/customer/customerCenter/customerMain#" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">FamilySite&emsp;</a>
-
 </div>
 
 {% endblock contents %}

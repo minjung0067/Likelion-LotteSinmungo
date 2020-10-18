@@ -1,4 +1,3 @@
-  
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,20 +11,26 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap.min.css' %}">
 
+    
+
 </head>
 
 <style>
-    html, body {
-        width: 100%;
-        height: 100%;
-    }
 
     * {
     margin: 0px;
     padding: 0px;
     }
     #a { text-decoration:none }
+<<<<<<< HEAD
+    .body {
+        display : flex;
+        height : 1080px;
+        font-family: 'Nanum Gothic Coding', monospace;
+        }
+=======
 
+>>>>>>> a134882e09f69d290299b59b1d2d7db545acc324
     .container-fluid {
         flex-direction: column;
     }
@@ -36,7 +41,6 @@
         text-align: right;
         padding-top: 15px;
         }
-        
     .bar{
         width : 100%;
         height : 300px;
@@ -147,6 +151,23 @@
     }
 
 
+    .title{
+        border-radius: 200px;
+    border: 0px;
+    color: white;
+    background-color: #da281c;
+    padding : 20px;
+    text-align: center;
+    margin : 10px 400px;
+    font-size: 25px;
+    }
+    .form-title{
+        width: 300px;
+    }
+    .submit_bar{
+        width: 200%;}
+
+
 
 </style>
 
@@ -167,12 +188,9 @@
             </nav>
         <div class = "bar">
             <div class = "logo">
-
                 <a href = "{% url 'index' %}">
                     <img src = "../static/image/mainlogo.png" width = "790px" height = "160px">
                 </a>
-                
-
             </div>
             <div class = "m_bar">
                 <a href ="{% url 'solution' %}" style="color: white; font-size : 30px;text-decoration: none;">롯데가 해냈어</a>
@@ -188,6 +206,7 @@
 
 <!-- 다른 HTML 파일의 contents block이 삽입되는 부분-->
 {% block contents %}
+
 {% endblock contents %} 
 
 </body>
