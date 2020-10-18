@@ -79,7 +79,7 @@ def problemWrite(request):
         prb_form = ProblemForm()
     return render(request, 'problem_write.html', {'prb_form':prb_form})
 
-def sol_writing(request):
+def solWrite(request):
     solution_item = Solution.objects.all()
     user_id = request.user.id
     recipients = myUser.objects.all()  #알림 받을 사람들
@@ -91,9 +91,10 @@ def sol_writing(request):
             post.userid = user_id
             post.save()
             notify.send (user, recipient = recipients, verb ='님이 새로운 문제를 해결했어요')
-            return redirect('sol_writing')
-    sol_form = SolutionForm()
-    return render(request, 'solution.html', {'sol_form':sol_form,'solution_item':solution_item})
+        return redirect('solution')
+    else:
+        sol_form = SolutionForm()
+    return render(request, 'sol_writing.html', {'sol_form':sol_form,'solution_item':solution_item})
 
 def problemUpdate(request,problem_detail_id):
     post = get_object_or_404(Problem,pk=problem_detail_id)

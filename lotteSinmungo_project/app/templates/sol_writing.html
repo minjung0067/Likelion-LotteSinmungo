@@ -50,15 +50,15 @@
 </style>
 <body>
     <div class="topbar">
-        <p>롯데에게 말해줘</p>
+        <p>롯데가 해냈어</p>
     </div>
     <div class="container" >
         <div class = "contents1">
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{prb_form.as_p}}
+                {{sol_form.as_p}}
                 <input type="submit" value="확인">
-            </form>    
+            </form>  
         </div>
         <div class = "contents2">
             <img src="../static/image/Chracter.png" alt="">
@@ -66,3 +66,5 @@
     </div>
 
 {% endblock contents %}
+
+    

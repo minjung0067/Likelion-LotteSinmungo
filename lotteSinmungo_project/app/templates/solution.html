@@ -9,7 +9,7 @@
 {% block contents %}    
 
 {% if request.user.is_superuser %}
-    <a href= "{% url 'sol_writing' %}"> 글쓰기 </a>
+    <a href= "{% url 'solWrite' %}"> 글쓰기 </a>
     {% endif %}
 
     {% for solution in solution_item.all %}
