@@ -6,6 +6,7 @@
 {% endblock title %}
 
 {% block contents %}
+<div class="container">
 
     <div>
         <select id="sort-select" onchange="location = this.value;">
@@ -15,42 +16,8 @@
         </select>
     </div>
 
-    <!-- ranking -->
-        <!-- use crontab or Periodic Tasks -->
-        <h1>
-            [여기는 게시물 랭킹순(상위 10개)]
-        </h1>
-        <table class = "table">
-            <thead>
-            <tr class="thead-dark">
-                <th>번호</th>
-                <th>제목</th>
-                <th>공감수</th>
-                <th>작성일</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for k in problem_trending %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>
-                    <a href= "{% url 'problemDetail' k.id %}">{{k.title}}</a>
-                </td>
-                <td>
-                    {{ k.like_count }}
-                </td>
-                <td>{{ k.updated_at }}</td>
-                {% endfor %}
-            </tr>
-        </tbody>
-        </table>     
-
-    <h1>
-        [여기는 그냥 게시물 모음(select box 옵션에 따라 정렬 되는 부분)]
-    </h1>
-
-    <table class = "table">
-        <thead>
+    <table class = "table table-hover">
+        <thead class = "thead-light">
         <tr class="thead-dark">
             <th>번호</th>
             <th>제목</th>
@@ -74,17 +41,13 @@
     </tbody>
     </table>    
 
+</div>
 
 
-            </div>
-            <div class = "rd_container">
-            </div>
-        </div> 
-    </div>
     <div class = "footer">
         <h1></h1>
     </div>
-</div>
+
 
     {% for unread_messages in unread_messages.all %}
     <p> {{unread_messages}}</p>

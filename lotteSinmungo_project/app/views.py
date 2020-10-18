@@ -42,6 +42,8 @@ def problemList(request):
         problem_list_item = Problem.objects.order_by('-updated_at')
     elif sort=="many_like":
         problem_list_item = Problem.objects.order_by('-like_count', '-updated_at')
+    else:
+        problem_list_item = Problem.objects.order_by('-updated_at')
     """----------- """        
     
     return render(request, 'problemList.html', {'problem_list_item':problem_list_item,'problem_trending':problem_trending})
