@@ -34,14 +34,22 @@
                         <a style = "color : gray; font-size : 18px;">롯데 신문고에 방문해주셔서 감사합니다. <br>
                         무엇이든 말씀해주세요 ! </a>
                     </div>
+                    {% if user.is_authenticated %}
                     <div class = "rur_container">
-                        <a href="{% url 'signin' %}">                       
-                            <div class = "button">Sign In</div>
-                            <br><br>
-                        <a href="{% url 'signup' %}">
-                            <div class = "button">Sing Up</div>
                         </a>   
                     </div>
+                    {% else %}
+                        <div class = "rur_container">
+        
+                            <a href="{% url 'signin' %}">                       
+                                <div class = "button">Sign In</div>
+                                <br><br>
+                            <a href="{% url 'signup' %}">
+                                <div class = "button">Sing Up</div>
+                            </a>   
+                        </div>
+        
+                    {% endif %}
                 </div>
                 <div class = "rd_container">
                     <img src = "static/image/롯문고 캐릭터.png" width = "300px" height = "250px">

@@ -9,6 +9,7 @@ class Solution(models.Model):
     body = models.TextField()
     original_date = models.DateTimeField(auto_now=True)
     upload_date = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='images/',blank=True, null=True)
     def __str__(self):
         return self.title  
     
@@ -33,12 +34,3 @@ class Problem (models.Model):
     image = models.ImageField(upload_to='images/',blank=True, null=True)
     def __str__(self):
         return self.title
-
-def get_image_filename(instance, filename):
-    title = instance.post.title
-    slug = slugify(title)
-    return "post_images/%s-%s" % (slug, filename)  
-
-class Photo(models.Model):
-    post = models.ForeignKey(Problem, on_delete=models.CASCADE, null=True)
-    image = models.ImageField(upload_to='images/', blank=True, null=True)

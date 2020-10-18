@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect , get_object_or_404
-from .models import Problem , myUser ,Solution,Photo
+from .models import Problem , myUser ,Solution
 from .forms import ProblemForm,SolutionForm
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
@@ -93,7 +93,7 @@ def solWrite(request):
     user_id = request.user.id
     recipients = myUser.objects.all()  #알림 받을 사람들
     if request.method == "POST":
-        filled_form = SolutionForm(request.POST)
+        filled_form = SolutionForm(request.POST, request.FILES)
         if filled_form.is_valid():
             user = request.user
             post = filled_form.save(commit=False)
@@ -107,10 +107,12 @@ def solWrite(request):
 
 def problemUpdate(request,problem_detail_id):
     post = get_object_or_404(Problem,pk=problem_detail_id)
-
+    user_id = request.user.id
     if(request.method == 'POST'):
-        form = ProblemForm(request.POST,instance=post)
+        form = ProblemForm(request.POST,request.FILES,instance=post)
         if form.is_valid():
+            post = form.save(commit=False)
+            post.userid = user_id
             form.save()
             return redirect('problemList')
     else:
