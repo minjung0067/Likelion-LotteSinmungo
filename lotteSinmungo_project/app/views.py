@@ -18,11 +18,7 @@ from notifications.signals import notify
 from django.forms import modelformset_factory
 
 def index(request):
-    recipients = myUser.objects.all()
-    user = request.user
-    if user in recipients:
-        unread_messages = user.notifications.unread()
-        return render(request, 'index.html', {'unread_messages':unread_messages})
+
     return render(request, 'index.html')
 
 def problemDetail(request, problem_detail_id):
@@ -63,18 +59,6 @@ def solution(request):
     if request.user.is_authenticated:
         user = request.user
         user.notifications.mark_all_as_read()
-        if request.user.is_superuser:
-            user_id = request.user.id
-            recipients = myUser.objects.all()  #알림 받을 사람들
-            if request.method == "POST":
-                filled_form = SolutionForm(request.POST)
-                if filled_form.is_valid():
-                    post = filled_form.save(commit=False)
-                    post.userid = user_id
-                    post.save()
-                    notify.send (user, recipient = recipients, verb ='님이 새로운 문제를 해결했어요')
-            sol_form = SolutionForm()
-            return render(request, 'solution.html', {'sol_form':sol_form,'solution_item':solution_item})
         return render(request, 'solution.html', {'solution_item':solution_item})
     else:
         return render(request, 'solution.html', {'solution_item':solution_item})
@@ -85,23 +69,34 @@ def solutionDetail(request, solution_detail_id):
 
 def problemWrite(request):
     user_id = request.user.id
-    user = request.user #알림 보낼 관리자
-    recipients = myUser.objects.all()  #알림 받을 사람들\
     if request.method == "POST":
         filled_form = ProblemForm(request.POST, request.FILES)
         if filled_form.is_valid():
             post = filled_form.save(commit=False)
             post.userid = user_id
             post.save()
-            
-        if user in recipients:
-            unread_messages = user.notifications.unread()
-            notify.send (user, recipient = recipients, verb ='님께서 새로운 숙제를 작성하셨습니다 (●''●)')
         return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
 
     else:
         prb_form = ProblemForm()
     return render(request, 'problem_write.html', {'prb_form':prb_form})
+
+def solWrite(request):
+    solution_item = Solution.objects.all()
+    user_id = request.user.id
+    recipients = myUser.objects.all()  #알림 받을 사람들
+    if request.method == "POST":
+        filled_form = SolutionForm(request.POST)
+        if filled_form.is_valid():
+            user = request.user
+            post = filled_form.save(commit=False)
+            post.userid = user_id
+            post.save()
+            notify.send (user, recipient = recipients, verb ='님이 새로운 문제를 해결했어요')
+        return redirect('solution')
+    else:
+        sol_form = SolutionForm()
+    return render(request, 'sol_writing.html', {'sol_form':sol_form,'solution_item':solution_item})
 
 def problemUpdate(request,problem_detail_id):
     post = get_object_or_404(Problem,pk=problem_detail_id)
