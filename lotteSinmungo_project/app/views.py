@@ -19,8 +19,17 @@ from django.forms import modelformset_factory
 from django.core.paginator import Paginator
 
 def index(request):
+    recipients = myUser.objects.all()
+    user = request.user
+    problem_list_item = Problem.objects.all()
+    """--- 랭킹 ---"""
+    problem_trending = Problem.objects.order_by('-like_count', '-updated_at')
+    problem_trending = problem_trending[:3]
+    if user in recipients:
+        unread_messages = user.notifications.unread()
+        return render(request, 'index.html', {'unread_messages':unread_messages})
+    return render(request, 'index.html',{'problem_trending':problem_trending})
 
-    return render(request, 'index.html')
 
 def problemDetail(request, problem_detail_id):
     problem_detail_obj = get_object_or_404(Problem, pk = problem_detail_id)
