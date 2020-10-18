@@ -47,7 +47,7 @@
                 <td>
                     {{ k.like_count }}
                 </td>
-                <td>{{ k.updated_at }}</td>
+                <td>{{ k.updated_at|date:"Y년 m월 d일"}}</td>
                 {% endfor %}
             </tr>
         </tbody>

@@ -25,7 +25,7 @@
     }
     .upbar{
         width : 100%;
-        height : 60px;
+        height : 28px;
         background-color :white;
         text-align: right;
         padding-top: 15px;
@@ -60,7 +60,7 @@
         height : 500px;
         float: left;
         box-sizing: border-box;
-        background-color : yellow;
+        background-color : white
         }
 
     .r_container{
@@ -85,14 +85,14 @@
         background-color : white;
         text-align: left;
         padding-left : 50px;
-        padding-top : 18px;
+        padding-top : 30px;
     }
     .rur_container{
         width : 40%;
         height : 100%;
         background-color : white;
         text-align : center;
-        padding-top : 30px;
+        padding-top : 40px;
         padding-right : 40px;
 
     }
@@ -123,7 +123,7 @@
     
     .footer{
         width : 100%;
-        height : 80px;
+        height : 60px;
         background-color : #f5f5f5;
         cursor: pointer;
         font-size : 20px;
@@ -131,6 +131,7 @@
         color : gray;
         text-align : left;
         line-height : 40px;
+        display: flex;
     }
 
     table td{
@@ -154,12 +155,12 @@
             <a href = "{% url 'signin' %}" style="color: black; font-size : 15px; text-decoration: none;">로그인</a> &emsp;&emsp;&emsp;&emsp;
             <a href = "{% url 'signup' %}" style="color: black; font-size : 15px; text-decoration: none;">회원가입</a>&emsp;&emsp;&emsp;&emsp;
             {% endif %}
-            <a style="color: black; font-size : 15px;">F&Q</a>&emsp;&emsp;&emsp;&emsp;
-            <a style="color: black; font-size : 15px;">고객센터</a>&emsp;&emsp;&emsp;&emsp;
+            
+            <a href = "https://www.lotteon.com/p/customer/customerCenter/customerMain" style= "color: black; font-size : 15px; text-decoration: none;">고객센터</a>&emsp;&emsp;&emsp;&emsp;
         </div>
         <div class = "bar">
             <div class = "logo">
-                <img src = "../static/image/mainlogo.png" width = "820px" height = "180px">
+                <img src = "../static/image/mainlogo.png" width = "790px" height = "160px">
             </div>
             <div class = "m_bar">
                 <a href ="{% url 'solution' %}" style="color: white; font-size : 30px;text-decoration: none;">롯데가 해냈어</a>
