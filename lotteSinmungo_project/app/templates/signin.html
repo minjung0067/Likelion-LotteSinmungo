@@ -59,7 +59,7 @@ button{
       <h2 style="font-size: 50px;">로그인<h2>
 
       </div>
-      <form method = "POST">
+      <form method = "POST" action="{% url 'signin' %}">
         {% csrf_token %}
         
         <div class="form-group">

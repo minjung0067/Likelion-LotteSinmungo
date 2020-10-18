@@ -91,6 +91,9 @@ button{
     
     <div class = "body">
     <p>{{solution_detail_item.body}} </p>
+    {% if solution_detail_item.image %}
+        <img src="{{solution_detail_item.image.url}}"style="max-width: 100%; height: auto;">
+    {% endif %}
     </div>
     
 </div>  
