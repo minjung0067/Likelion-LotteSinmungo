@@ -6,6 +6,7 @@
 {% endblock title %}
 
 {% block contents %}
+<div class="container">
 
     <div>
         <select id="sort-select" onchange="location = this.value;">
@@ -15,42 +16,8 @@
         </select>
     </div>
 
-    <!-- ranking -->
-        <!-- use crontab or Periodic Tasks -->
-        <h1>
-            [여기는 게시물 랭킹순(상위 10개)]
-        </h1>
-        <table class = "table">
-            <thead>
-            <tr class="thead-dark">
-                <th>번호</th>
-                <th>제목</th>
-                <th>공감수</th>
-                <th>작성일</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for k in problem_trending %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>
-                    <a href= "{% url 'problemDetail' k.id %}">{{k.title}}</a>
-                </td>
-                <td>
-                    {{ k.like_count }}
-                </td>
-                <td>{{ k.updated_at|date:"Y년 m월 d일"}}</td>
-                {% endfor %}
-            </tr>
-        </tbody>
-        </table>     
-
-    <h1>
-        [여기는 그냥 게시물 모음(select box 옵션에 따라 정렬 되는 부분)]
-    </h1>
-
-    <table class = "table">
-        <thead>
+    <table class = "table table-hover">
+        <thead class = "thead-light">
         <tr class="thead-dark">
             <th>번호</th>
             <th>제목</th>
@@ -61,7 +28,7 @@
         <tbody>
         {% for i in problem_list_item %}
         <tr>
-            <td>{{ forloop.counter }}</td>
+            <td>{{ i.id }}</td>
             <td>
                 <a href= "{% url 'problemDetail' i.id %}">{{i.title}}</a>
             </td>
@@ -74,17 +41,43 @@
     </tbody>
     </table>    
 
-
-
-            </div>
-            <div class = "rd_container">
-            </div>
-        </div> 
+    <div class="row mt-2">
+        <div class="col-12">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    {% if problem_list_item.has_previous %}                         
+                    <li class="page-item">
+                        <a class="page-link" href="?p={{problem_list_item.previous_page_number }}">이전으로</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">이전으로</a>
+                    </li>
+                    {% endif %}
+                    <li class="page-item">
+                        <a class="page-link" href="#">{{problem_list_item.number}}/{{problem_list_item.paginator.num_pages}}</a>
+                    </li>
+                    {% if problem_list_item.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?p={{problem_list_item.next_page_number }}">다음으로</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">다음으로</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
     </div>
+
+</div>
+
+
     <div class = "footer">
         <h1></h1>
     </div>
-</div>
+
 
     {% for unread_messages in unread_messages.all %}
     <p> {{unread_messages}}</p>
