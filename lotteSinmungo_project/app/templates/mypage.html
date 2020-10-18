@@ -1,11 +1,11 @@
 <style>
-    .container{
+    .containerr{
         max-width: 1180px;
         width: 100%;
         margin-left: auto;
         margin-right: auto;
     }
-    .title{
+    .titled{
         display: flex;
         margin: 72px 10px 3px;
     }
@@ -19,7 +19,7 @@
         margin: 0px;
     }
     
-    .content{
+    .contentt{
         display: grid;
         grid-template-columns: repeat(3,calc(33.33333% - 30px));
         grid-row-gap: 50px;
@@ -89,23 +89,23 @@
     {% block contents %}
     <!-- 이 아래부터는 html 콘텐츠 내용입니다 -->
     {% if user.is_authenticated %}
-    <div class = "container">
-        <div class = "title">
+    <div class = "containerr">
+        <div class = "titled">
             <p class="top">새 알림</p>
         </div>
         
-        <div class = "content">
+        <div class = "contentt">
             {% for unread_messages in unread_messages.all %}
             <p class="notify"> {{unread_messages}}</p>
             {{ notifications_tags }}
             {% endfor %}
         </div>
     
-        <div class = "title">
+        <div class = "titled">
             <p class="top">좋아요한 글</p>
         </div>
         
-        <div class = "content">
+        <div class = "contentt">
             {% for like_item in like_problem %}
                 <div class = "problem_box">
                     <a href= "{% url 'problemDetail' like_item.id %}">
@@ -120,11 +120,11 @@
             {% endfor %}                
         </div>    
     
-        <div class = "title">
+        <div class = "titled">
             <p class="top">내가 작성한 글</p>
         </div>
     
-        <div class = "content">
+        <div class = "contentt">
             {% for probl_item in my_problem_item %}
             <div class = "problem_box">
                 <a href= "{% url 'problemDetail' probl_item.id %}">
