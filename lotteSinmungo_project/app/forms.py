@@ -9,9 +9,11 @@ class ProblemForm(forms.ModelForm): # 만들어진 모델로부터 폼을 사용
         fields = ('title','body','image')
         widgets = {
         'title': forms.TextInput(attrs={
-            'class': 'form-title', 'style': 'width: 100%', 'placeholder': '제목을 입력하세요.',
-            })
-        
+            'class': 'form-title', 'style': 'width: 200%', 'placeholder': '제목을 입력해주세요.',
+            }),
+        'body': forms.Textarea(attrs={
+            'class': 'form-body', 'style': 'width: 200%', 'placeholder': '내용을 입력해주세요.',
+            }),
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
