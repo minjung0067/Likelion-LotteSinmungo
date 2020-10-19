@@ -88,22 +88,6 @@ def problemWrite(request):
     else:
         return render(request,'signin.html')
 
-def solWrite(request):
-    solution_item = Solution.objects.all()
-    user_id = request.user.id
-    recipients = myUser.objects.all()  #알림 받을 사람들
-    if request.method == "POST":
-        filled_form = SolutionForm(request.POST, request.FILES)
-        if filled_form.is_valid():
-            user = request.user
-            post = filled_form.save(commit=False)
-            post.userid = user_id
-            post.save()
-            notify.send (user, recipient = recipients, verb ='님이 새로운 문제를 해결했어요')
-        return redirect('solution')
-    else:
-        sol_form = SolutionForm()
-    return render(request, 'sol_writing.html', {'sol_form':sol_form,'solution_item':solution_item})
 
 def problemUpdate(request,problem_detail_id):
     post = get_object_or_404(Problem,pk=problem_detail_id)
@@ -124,6 +108,44 @@ def problemDelete(request,problem_detail_id):
     post.delete()
     return redirect('problemList')
 
+
+
+def solWrite(request):
+    solution_item = Solution.objects.all()
+    user_id = request.user.id
+    recipients = myUser.objects.all()  #알림 받을 사람들
+    if request.method == "POST":
+        filled_form = SolutionForm(request.POST, request.FILES)
+        if filled_form.is_valid():
+            user = request.user
+            post = filled_form.save(commit=False)
+            post.userid = user_id
+            post.save()
+            notify.send (user, recipient = recipients, verb ='님이 새로운 문제를 해결했어요')
+        return redirect('solution')
+    else:
+        sol_form = SolutionForm()
+    return render(request, 'sol_writing.html', {'sol_form':sol_form,'solution_item':solution_item})
+
+
+def solutionUpdate(request,solution_detail_id):
+    post = get_object_or_404(Solution,pk=solution_detail_id)
+    user_id = request.user.id
+    if(request.method == 'POST'):
+        form = SolutionForm(request.POST,request.FILES,instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.userid = user_id
+            form.save()
+            return redirect('solution')
+    else:
+        sol_form = SolutionForm(instance=post)
+    return render(request,'solution_update.html',{'sol_form':sol_form})
+
+def solutionDelete(request,solution_detail_id):
+    post = Solution.objects.get(pk=solution_detail_id)
+    post.delete()
+    return redirect('solution')
 
 def signup(request):   #회원가입 기능
     if request.method == "GET":
