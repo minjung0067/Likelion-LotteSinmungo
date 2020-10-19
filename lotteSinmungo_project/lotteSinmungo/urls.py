@@ -42,7 +42,12 @@ urlpatterns = [
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
     path('mypage/', views.mypage, name='mypage'),
+
     path('solWrite/', views.solWrite, name='solWrite'),
+    path('solutionUpdate/<int:solution_detail_id>', views.solutionUpdate,name='solutionUpdate'),
+    path('solutionDelete/<int:solution_detail_id>', views.solutionDelete,name='solutionDelete'),
+    
+    
     path('like/<int:problem_detail_key_id>', views.problem_like, name='problem_like'),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
     
