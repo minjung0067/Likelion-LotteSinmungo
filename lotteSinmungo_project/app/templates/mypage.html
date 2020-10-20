@@ -31,6 +31,15 @@
         width: 100%;
         padding: 20px 0px 20px;
     }
+        .contents{
+        color: rgb(63, 63, 63);
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        width: 80%;
+        padding: 40px 20px 20px;
+    }
 
     .a{
         align-items: center;
@@ -45,9 +54,9 @@
         height: 225px;
         overflow: hidden;
     }
-    .prob_box{
+    .probl_box{
         width: 100%;
-        text-align: left;
+        text-align: center;
         position: relative;
     }
     .img_sec{
@@ -60,13 +69,14 @@
         text-decoration: none;
         position: relative;
         height: 30px;
-        padding: 0 20px;
+        padding: 20 20px;
         border-top: none;
+
     }
     .lotte_image{
         position: fixed;
         align-items: center;
-        right:200px;
+        right:50px;
         bottom: 10px;
         opacity: 70%;
         padding-bottom: 50px;
@@ -94,7 +104,7 @@
             <p class="top">새 알림</p>
         </div>
         
-        <div class = "contentt">
+        <div class = "contents">
             {% for unread_messages in unread_messages.all %}
             <p class="notify"> {{unread_messages}}</p>
             {{ notifications_tags }}
@@ -110,7 +120,11 @@
                 <div class = "problem_box">
                     <a href= "{% url 'problemDetail' like_item.id %}">
                         <div class = "probl_box">
-                            <img class="img_sec" src="{{like_item.image.url}}"style="width:200px; height: 200px;">
+                            {% if like_item.image %}
+                                <img class="img_sec" src="{{like_item.image.url}}"style="width:200px; height: 200px; opacity: 70%">
+                            {% else %}
+                                <img class="img_sec" src = "../static/image/롯문고 캐릭터.png" style="width:250px; height: 200px; opacity: 40%;">
+                            {% endif %}
                             <div class = "info_sec">
                                 {{like_item.title}}
                             </div>
@@ -129,7 +143,11 @@
             <div class = "problem_box">
                 <a href= "{% url 'problemDetail' probl_item.id %}">
                     <div class = "probl_box">
-                        <img class="img_sec" src="{{probl_item.image.url}}"style="width:200px; height: 200px;">
+                        {% if like_item.image %}
+                            <img class="img_sec" src="{{probl_item.image.url}}"style="width:200px; height: 200px; opacity: 70%">
+                        {% else %}
+                            <img class="img_sec" src = "../static/image/롯문고 캐릭터.png" style="width:250px; height: 200px; opacity: 40%;">
+                        {% endif %}
                         <div class = "info_sec">
                             {{probl_item.title}}
                         </div>
@@ -140,7 +158,7 @@
 
 
         <div>
-            <img class="lotte_image" src = "../static/image/롯문고 캐릭터.png" width = "400px" height = "400px">
+            <img class="lotte_image" src = "../static/image/롯문고 캐릭터.png" width = "300px" height = "300px">
         </div>
 
     
