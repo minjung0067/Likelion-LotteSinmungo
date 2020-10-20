@@ -73,10 +73,10 @@ button{
 <div class = "all">
     <div class="top">
     <br>
-    <a href = "{% url 'problemList' %}" class = "a_tag">뒤로가기</a>
+    <a href = "{% url 'problemList' %}" class = "a_tag">&emsp;뒤로가기</a>
     {% if user.is_superuser %}
-        <a href = "{% url 'solutionUpdate' solution_detail_item.id %}"class = "a_tag">수정하기</a>
-        <a href = "{% url 'solutionDelete' solution_detail_item.id %}"class = "a_tag">삭제하기</a>
+        <a href = "{% url 'solutionUpdate' solution_detail_item.id %}"class = "a_tag" >&emsp;수정하기</a>
+        <a href = "{% url 'solutionDelete' solution_detail_item.id %}"class = "a_tag">&emsp;삭제하기</a>
     {% endif %}
     
 </div>
