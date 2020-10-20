@@ -73,7 +73,7 @@ button{
 <div class = "all">
     <div class="top">
     <br>
-    <a href = "{% url 'problemList' %}" class = "a_tag">뒤로가기</a>
+    <a href = "{% url 'problemList' %}" class = "a_tag">&emsp;뒤로가기</a>
     {% if user.is_authenticated %}
         {% if user.id == problem_detail_key.userid %}
         <a href = "{% url 'problemUpdate' problem_detail_key.id %}"class = "a_tag">수정하기</a>

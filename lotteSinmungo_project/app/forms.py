@@ -28,18 +28,18 @@ class SolutionForm(forms.ModelForm): # 만들어진 모델로부터 폼을 사�
         fields = ('title','body','image')
         widgets = {
         'title': forms.TextInput(attrs={
-            'class': 'form-title', 'style': 'width: 200%', 'placeholder': '제목을 입력해주세요.',
+            'class': 'form-title', 'style': 'width: 200%', 'placeholder': '제목을 입력해주세요 :D ♡', 'style': 'height: auto; line-height: normal; width: 100%; padding: .8em .5em; margin: 3px; border: 0px; background-color: rgba(224, 224, 224, 0.493);;font-size: 16px;',
             }),
         'body': forms.Textarea(attrs={
-            'class': 'form-body', 'style': 'width: 200%', 'placeholder': '내용을 입력해주세요.',
+            'class': 'form-body', 'style': 'width: 200%', 'placeholder': '내용을 입력해주세요 :D ♡', 'style': 'height: auto; line-height: normal; width: 100%; padding: .8em .5em; margin: 3px; border: 0px; background-color: rgba(224, 224, 224, 0.493);;font-size: 16px;',
             }),
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['title'].widget.attrs['maxlegth'] = 100
-        self.fields['title'].label = "제목"
-        self.fields['body'].label = "불만사항"
-        self.fields['image'].label = "이미지"
+        self.fields['title'].label = ""
+        self.fields['body'].label = ""
+        self.fields['image'].label = ""
 
 class PhotoUploadForm(forms.Form):
     """Image upload form.""" 
