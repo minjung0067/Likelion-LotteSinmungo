@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'app',
     'notifications',
     'bootstrap4',
+    # 'django_apscheduler'
 ]
 
 MIDDLEWARE = [
