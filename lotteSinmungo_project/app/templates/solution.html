@@ -6,10 +6,26 @@
 <title>롯데신문고</title>
 {% endblock title %}
 
-{% block contents %}
+{% block contents %}    
+
+<div class="container" >
+
+{% if request.user.is_superuser %}
+
+    <a href= "{% url 'solWrite' %}" style="border : 0px; border-radius: 20px; background-color: rgba(233, 94, 94, 0.685); color: white; align-items: center; height: 100px; font-size: 20px; margin: 0 auto; width: 100% ">관리자 권한으로 글쓰기 </a>
+    {% endif %}
+
     {% for solution in solution_item.all %}
     <a href= "{% url 'solutionDetail' solution.id %}">
         <h1> {{solution.title}}</h1>
     </a>
     {% endfor %}
+
+</div>
+<div class = "footer">
+    <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">About&emsp;</a>
+    <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">Developer&emsp;</a>
+    <a href= "https://www.lotteon.com/p/customer/customerCenter/customerMain#" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">FamilySite&emsp;</a>
+
+</div>
 {% endblock contents %}

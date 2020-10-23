@@ -1,0 +1,52 @@
+
+
+{% extends "template.html" %}
+{% load static %}
+{% load bootstrap4 %}
+{% block title %}
+<title>롯데신문고</title>
+{% endblock title %}
+
+{% block contents %}
+
+
+
+<div class="container" >
+    <div class = "contents1" style = "background-image: url( '../static/image/back.png' ); background-repeat:no-repeat;">
+        <form method="POST" enctype="multipart/form-data">
+            <br><br><br>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{sol_form.as_p}}
+                <br><br>
+            <div class="submit_wrap">                 
+                <input class="submit_bar" type="submit" value="해결책 올리기" style = "border : 0px; height: 50px;
+                border-radius: 20px;
+                color: white;
+                background-color: rgba(233, 94, 94, 0.685);
+                color: white;
+                align-items: center;
+                margin: 0 auto; width: 100%;"
+                >
+                <br><br>
+            </form>
+                <br><br>
+            </div>
+            
+            
+    </div>
+    
+    </div>
+    <div class = "footer">
+        <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">About&emsp;</a>
+        <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">Developer&emsp;</a>
+        <a href= "https://www.lotteon.com/p/customer/customerCenter/customerMain#" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">FamilySite&emsp;</a>
+
+    </div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+{% endblock contents %}

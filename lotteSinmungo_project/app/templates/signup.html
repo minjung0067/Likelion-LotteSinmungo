@@ -1,65 +1,124 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    </head>
-    <body>
-        <div class= "container">
-            <div class = "row mt-5">
-                <div class = "col-12 text-center">
-                    <h1>회원가입</h1>
-                </div>
-            </div>
-        </div>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>롯데신문고</title>
+    <link rel = "shortcut icon" href = "{% static 'image/favicon.ico' %}" type="image/x-icon">
+</head>
+<style>
+@font-face {
+  font-family: 'LotteMartHappy';
+  font-style: normal;
+  font-weight: 400;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff') format('woff');
+}   
+body{
+    margin: 10px;
+    font-family: 'LotteMartHappy', sans-serif;
+}
+  .top{
+        width : 100%;
+        height : 40px;
+        }
+  .main{
+    display: flex;
+    width: 100%;
+  }
+  .partition{
+    width: 33%;
+    height: 100px;
+  }
+  input[type="text"], input[type="password"] {
+    height: auto; /* 높이 초기화 */
+    line-height: normal; /* line-height 초기화 */
+    width: 400px;
+    padding: .8em .5em; /* 여백 설정 */ 
+    margin: 3px;
+    border: 0px;
+    background-color: rgb(224, 224, 224);
+    font-size: 16px;
     
-        
-        <!--            폼 안에다가 입력해줘야한다. (안써주면 에러발생)
-             csrf_token 폼의 경우에는 , 데이터를 서버에 전달하는 기능.이때 암호화된 키를 숨겨놓아 크로스도메인을 막기 위함. -->
-    <!-- bootstrap -component - forms -->
+    }
+  button{
+    width: 380px;
+    height: 50px;
+    border : 0px;
+    border-radius: 20px;
+    background-color: #da281c;
+    color: white;
+    align-items: center;
+    margin: 0 auto;
+  }
+  .logo{
+          width : 100%;
+          height :190px;
+          background-color :white;
+          text-align: center;
+          }
+</style>
+<body>
+    <div class = "main">
+        <div class = "partition"></div>
+        <div class = "partition">
+        <div class = "top"> </div>
     <div class= "container">
         <div class = "row mt-5">
-            {{error}}
-            <div class = "col-12 ">
-        <div class = "row mt-5">
-    <div class = "col-12 ">
-        <form method = "POST" action = ".">  
-        {% csrf_token %} 
-        <div class="form-group">
-        <label for="username">사용자 이름</label>
-        <input 
-        type="text" 
-        class="form-control" 
-        id="username" 
-        placeholder="사용자 이름"
-        name="username">   
-        <!-- 이 name 값으로 정보가 전달된다 -->
+            <div class = "col-12 text-center">
+                <h2 style="font-size: 50px;">회원가입</h2>
+            </div>
+            
         </div>
+    </div>
+    <!--            폼 안에다가 입력해줘야한다. (안써주면 에러발생)
+         csrf_token 폼의 경우에는 , 데이터를 서버에 전달하는 기능.이때 암호화된 키를 숨겨놓아 크로스도메인을 막기 위함. -->
+<!-- bootstrap -component - forms -->
+<div class= "container">
+    <div class = "row mt-5">
+        {{error}}
+        <div class = "col-12 ">
+    <div class = "row mt-5">
+<div class = "col-12 ">
+    <form method = "POST" action = ".">  
+    {% csrf_token %} 
+    <div class="form-group">
+    <input 
+    type="text" 
+    class="form-control" 
+    id="username" 
+    placeholder="사용자 이름"
+    name="username">   
+    <!-- 이 name 값으로 정보가 전달된다 -->
+    </div>
 
-        <div class="form-group">
-        <label for="password">비밀번호</label>
-        <input type="password" 
-        class="form-control"
-        id="password"
-            placeholder="비밀번호"
-            name= "password">
-        </div>
-        
-        <div class="form-group">
-        <label for="re_password">비밀번호 확인</label>
-        <input 
-        type= "password" 
-        class="form-control"
-        id="re_password"
-            placeholder="비밀번호 확인"
-            name = "re_password">
-        </div>
-        <button type="submit" class="btn btn-primary">등록</button>
-    </form>    
+    <div class="form-group">
+    <input type="password" 
+    class="form-control"
+    id="password"
+        placeholder="비밀번호"
+        name= "password">
+    </div>
+    
+    <div class="form-group">
+    <input 
+    type= "password" 
+    class="form-control"
+    id="re_password"
+        placeholder="비밀번호 확인"
+        name = "re_password">
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary" style="margin: 0 2.5%;">회원가입하기</button>
+</form>    
+</div>
+<br><br><br>
+<img src = "../static/image/small_logo.png" width = "150px" height = "150px" style="margin: 40px 23%;">
+<div class = "partition"></div>
+</div>
+    
 
 
 </body>
 </html>
+

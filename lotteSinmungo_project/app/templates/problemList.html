@@ -6,31 +6,81 @@
 {% endblock title %}
 
 {% block contents %}
+<div class="container">
+
+    <table class = "table table-hover">
+        <thead class = "thead-light">
+        <tr class="thead-dark" >
+            <th style="color:  #DA291C; width: 55%;">제목</th>
+            <th style="color:  #DA291C;">공감수</th>
+            <th style="color:  #DA291C;">작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in problem_list_item %}
+        <tr>
+            <td style="background-color: white;">
+                <a style="text-decoration: none; color: black; " href= "{% url 'problemDetail' i.id %}">{{i.title}}</a>
+            </td>
+            <td style="background-color: white;">
+                {{ i.like_count }}
+            </td>
+            <td style="background-color: white;">{{ i.updated_at|date:"Y년 m월 d일"}}</td>
+            {% endfor %}
+        </tr>
+    </tbody>
+    </table>    
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <nav>
+                <!-- Sorting Button -->
+                <select class="custom-select" id="sort-select" onchange="location = this.value;" style="width: 7%; float: left;">
+                    <option class= "none" value="?sort=none">---</option>
+                    <option class= "sort-likes" value="?sort=many_like">공감순</option>
+                    <option class= "sort-date'" value="?sort=early_date">최신순</option>
+                </select>
+
+                <ul class="pagination justify-content-center">
+                    {% if problem_list_item.has_previous %}                         
+                    <li class="page-item">
+                        <a class="page-link" href="?p={{problem_list_item.previous_page_number }}">이전으로</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">이전으로</a>
+                    </li>
+                    {% endif %}
+                    <li class="page-item">
+                        <a class="page-link" href="#" style="color: black;">{{problem_list_item.number}}/{{problem_list_item.paginator.num_pages}}</a>
+                    </li>
+                    {% if problem_list_item.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?p={{problem_list_item.next_page_number }}">다음으로</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">다음으로</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</div>
 
 
-    <a href = "{% url 'index' %}">이미지로고자리</a>
-    <a href ="{% url 'solution' %}">롯데가해냈어</a>
-    <a href ="{% url 'problemList' %}">롯데의숙제들</a>
-    <a href ="{% url 'writing' %}">롯데에게말해줘</a>
-    <a href='/signin'>로그인</a>
-    <a href='/signup'>회원가입</a>
 
-    <!-- ranking -->
-    <p>----------------------------</p>
-    <!-- use crontab or Periodic Tasks -->
-
-    {% for k in problem_trending %}
-        <a href= "{% url 'problemDetail' k.id %}"><h1> {{k.title}} ♥:{{k.like_count}}</h1></a>
-
-    {% endfor %}
-    <p>----------------------------</p>
-    {% for i in problem_list_item %}
-        <a href= "{% url 'problemDetail' i.id %}"><h1> {{i.title}} ♥:{{i.like_count}}</h1></a>
-
-    {% endfor %}
 
     {% for unread_messages in unread_messages.all %}
     <p> {{unread_messages}}</p>
     {% endfor %}
+    
+    <div class = "footer">
+        <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">About&emsp;</a>
+        <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">Developer&emsp;</a>
+        <a href= "https://www.lotteon.com/p/customer/customerCenter/customerMain#" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">FamilySite&emsp;</a>
 
+    </div>
 {% endblock contents %}

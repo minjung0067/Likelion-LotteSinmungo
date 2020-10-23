@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.template.defaultfilters import slugify
 
 class Solution(models.Model):
     objects = models.Manager()
@@ -8,6 +9,7 @@ class Solution(models.Model):
     body = models.TextField()
     original_date = models.DateTimeField(auto_now=True)
     upload_date = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='images/',blank=True, null=True)
     def __str__(self):
         return self.title  
     
@@ -29,5 +31,6 @@ class Problem (models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     userid = models.IntegerField()
     like_count = models.PositiveIntegerField(default=0)
+    image = models.ImageField(upload_to='images/',blank=True, null=True)
     def __str__(self):
         return self.title

@@ -7,26 +7,32 @@
     {% endblock title %}
     {% load static %}
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
-
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap.min.css' %}">
+    <link rel = "shortcut icon" href = "{% static 'image/favicon.ico' %}" type="image/x-icon">
 </head>
+
 <style>
+    @font-face {
+  font-family: 'LotteMartHappy';
+  font-style: normal;
+  font-weight: 400;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff') format('woff');
+}   
+
     * {
     margin: 0px;
     padding: 0px;
-    }
-    a { text-decoration:none } 
-    .body {
-        margin : 0;
-        display : flex;
-        height : 1080px;
-        }
-    .container {
-        height : 100%;
+    font-family: 'LotteMartHappy', sans-serif;
+}
+    #a { text-decoration:none }
+    .container-fluid {
         flex-direction: column;
     }
     .upbar{
         width : 100%;
-        height : 60px;
+        height : 28px;
         background-color :white;
         text-align: right;
         padding-top: 15px;
@@ -46,8 +52,8 @@
         }
     .m_bar{
         width : 100%;
-        height : 110px;
-        line-height : 110px;
+        height: 80px;
+        line-height: 80px;
         background-color : #DA291C;
         text-align : center;
         }
@@ -61,11 +67,11 @@
         height : 500px;
         float: left;
         box-sizing: border-box;
-        background-color : yellow;
+        background-color : white
         }
 
     .r_container{
-        width : 50%;
+        width : 80%;
         height : 500px;
         float: right;
         box-sizing: border-box;
@@ -75,99 +81,129 @@
         }
     .ru_container{
         width : 100%;
-        height : 40%;
-        background-color : pink;
+        height : 60%;
+        background-color : rgb(255, 255, 255);
         display : flex;
         flex-direction : row;
     }
     .rul_container{
-        width : 50%;
-        height : 100%;
-        background-color : green;
-        flex : 1;
+        width : 100%;
+        height : 40%;
+        background-color : white;
+        text-align: left;
+        padding-left : 50px;
+        padding-top : 30px;
     }
     .rur_container{
-        width : 50%;
+        width : 40%;
         height : 100%;
-        background-color : gray;
-        flex : 1;
+        background-color : white;
+        text-align : center;
+        padding-top : 40px;
+        padding-right : 40px;
+
     }
     .rd_container{
         width : 100%;
         height : 60%;
-        background-color : blue;
+        background-color : white;
+        text-align : center;
     }
+    .button {
+        width:300px;
+        background-color: #DA291C;
+        border: none;
+        color:#fff;
+        padding: 15px 0;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 25px;
+        font-weight : bold;
+        margin: 4px;
+        cursor: pointer;
+        border-radius: 50px;
+        }
+    .button:hover{
+    box-shadow:300px 0 0 0 rgba(0,0,0,0.5) inset;
+            }
+    
     .footer{
-        background-color : #DA291C;
+        width : 100%;
+        height : 60px;
+        background-color : #f5f5f5;
+        cursor: pointer;
+        font-size : 20px;
+        font-weight : bold;
+        color : gray;
+        text-align : left;
+        line-height : 40px;
+        display: flex;
     }
+
+    table td{
+    width: 10%;
+    background: whitesmoke;
+    }
+
+
+    .title{
+        border-radius: 200px;
+    border: 0px;
+    color: white;
+    background-color: #da281c;
+    padding : 20px;
+    text-align: center;
+    margin : 10px 400px;
+    font-size: 25px;
+    }
+    .form-title{
+        width: 300px;
+    }
+    .submit_bar{
+        width: 200%;}
+
+
+
 </style>
+
 <!-- 항상 Body에 존재하는 상단 메뉴 부분-->
 <body>
-    <div class = "container">
-        <div class = "upbar">
-            <a href = "{% url 'signin' %}" style="color: black; font-size : 15px;">로그인</a> &emsp;&emsp;&emsp;&emsp;
-            <a href = "{% url 'signup' %}" style="color: black; font-size : 15px;">회원가입</a>&emsp;&emsp;&emsp;&emsp;
-            <a style="color: black; font-size : 15px;">F&Q</a>&emsp;&emsp;&emsp;&emsp;
-            <a style="color: black; font-size : 15px;">고객센터</a>&emsp;&emsp;&emsp;&emsp;
-        </div>
+
+<!--상단 메뉴바-->
+        <nav class = "navbar navbar-light bg-light navbar navbar-expand-sm">
+            {% if user.is_authenticated %}
+            <a href="{% url 'mypage' %} " style="color: black; font-size : 15px; text-decoration: none;">마이페이지</a>&emsp;&emsp;&emsp;&emsp;
+            <a href="{% url 'signout' %}" style="color: black; font-size : 15px; text-decoration: none;">로그아웃</a>&emsp;&emsp;&emsp;&emsp;
+            {% else %}
+            <a href = "{% url 'signin' %}" style="color: black; font-size : 15px; text-decoration: none;">로그인</a> &emsp;&emsp;&emsp;&emsp;
+            <a href = "{% url 'signup' %}" style="color: black; font-size : 15px; text-decoration: none;">회원가입</a>&emsp;&emsp;&emsp;&emsp;
+            {% endif %}
+            
+            <a href = "https://www.lotteon.com/p/customer/customerCenter/customerMain" style= "color: black; font-size : 15px; text-decoration: none;">고객센터</a>&emsp;&emsp;&emsp;&emsp;
+        </nav>
         <div class = "bar">
             <div class = "logo">
-                <img src = "../static/image/mainlogo.png" width = "820px" height = "180px">
+                <a href = "{% url 'index' %}">
+                    <img src = "../static/image/mainlogo.png" width = "790px" height = "160px">
+                </a>
             </div>
             <div class = "m_bar">
-                <a href ="{% url 'solution' %}" style="color: white; font-size : 30px;">롯데가 해냈어</a>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a style="color: white; font-size : 30px;">|</a>
+                <a href ="{% url 'solution' %}" style="color: white; font-size : 25px;text-decoration: none;">롯데가 해냈어</a>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a style="color: white; font-size : 25px;">|</a>
                 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                <a href ="{% url 'problemList' %}" style="color: white; font-size : 30px;">롯데의 숙제들</a>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a style="color: white; font-size : 30px;">|</a>
+                <a href ="{% url 'problemList' %}" style="color: white; font-size : 25px;text-decoration: none;">롯데의 숙제들</a>
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a style="color: white; font-size : 25px;text-decoration: none;">|</a>
                 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                <a href ="{% url 'writing' %}" style="color: white; font-size : 30px;">롯데에게 말해줘</a>
+                <a href ="{% url 'problemWrite' %}" style="color: white; font-size : 25px;text-decoration: none;">롯데에게 말해줘</a>
             </div>
         </div>
-        <div class = "m_container">
-            <div class = "l_container">
-                <div class="contextBox" style="text-align: center; background-color: white;
-                width: 500px; height: 300px; border-radius: 20px; margin: 80px;"></div>
-            </div>
-            <div class = "r_container">
-                <div class = "ru_container">
-                    <div class = "rul_container">
-                    </div>
-                    <div class = "rur_container">
-
-                    </div>
-                </div>
-                <div class = "rd_container">
-                </div>
-            </div> 
-        </div>
-        <div class = "footer">
-            <h1></h1>
-        </div>
-    </div>
-
-    {% if user.is_authenticated %}
-    <p>{{user}}님! 함께 불만을 나눠주세요 :D</p>
-    <a href="{% url 'signout' %}">
-        <button>로그아웃</button>
-    </a>
-    <a href="{% url 'mypage' %}">마이페이지</a>
-
-    {% else %}
-    <a href="{% url 'signup' %}">
-        <button>회원가입</button>
-    </a>
-    <br>
-    <a href="{% url 'signin' %}">
-        <button>로그인</button>
-    </a>
-    <br>
-    {% endif %}
-
+      
 
 <!-- 다른 HTML 파일의 contents block이 삽입되는 부분-->
 {% block contents %}
-{% endblock contents %}
+
+{% endblock contents %} 
 
 </body>
 </html>

@@ -1,7 +1,6 @@
-
 from django.shortcuts import render, redirect , get_object_or_404
-from .forms import ProblemForm
 from .models import Problem , myUser ,Solution
+from .forms import ProblemForm,SolutionForm
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
 from django.contrib.auth.models import User
@@ -14,58 +13,139 @@ import json
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-
 from django.db.models.signals import post_save
 from notifications.signals import notify
+from django.forms import modelformset_factory
+from django.core.paginator import Paginator
 
 def index(request):
-    lotteadmin = myUser.objects.get(id = 1)
     recipients = myUser.objects.all()
     user = request.user
+    problem_list_item = Problem.objects.all()
+    """--- 랭킹 ---"""
+    problem_trending = Problem.objects.order_by('-like_count', '-updated_at')
+    problem_trending = problem_trending[:3]
     if user in recipients:
         unread_messages = user.notifications.unread()
-        return render(request, 'index.html', {'unread_messages':unread_messages})
-    return render(request, 'index.html')
+        return render(request, 'index.html', {'unread_messages':unread_messages,'problem_trending':problem_trending})
+    return render(request, 'index.html',{'problem_trending':problem_trending})
 
-def problemDetail(request, problem_detial_id):
-    problem_detail_obj = get_object_or_404(Problem, pk = problem_detial_id)
+
+def problemDetail(request, problem_detail_id):
+    problem_detail_obj = get_object_or_404(Problem, pk = problem_detail_id)
     return render(request, 'problem_detail.html', {"problem_detail_key":problem_detail_obj})
 
 def problemList(request):
     problem_list_item = Problem.objects.all()
-    user = request.user
-    user.notifications.mark_all_as_read()
-
     """--- 랭킹 ---"""
     problem_trending = Problem.objects.order_by('-like_count', '-updated_at')
     problem_trending = problem_trending[:10]
     """----------- """
+
+    """--- 게시물 Sorting ---"""
+    sort = request.GET.get('sort','')
+    if sort=="early_date":
+        problem_list_item = Problem.objects.order_by('-updated_at')
+    elif sort=="many_like":
+        problem_list_item = Problem.objects.order_by('-like_count', '-updated_at')
+    else:
+        problem_list_item = Problem.objects.order_by('-updated_at')
+    """----------- """        
+    
+    page = int(request.GET.get('p', 1)) #현재 페이지 할당
+    paginator = Paginator(problem_list_item, 15) #페이지당 보여줄 게시물
+    problem_list_item = paginator.get_page(page)
+
     return render(request, 'problemList.html', {'problem_list_item':problem_list_item,'problem_trending':problem_trending})
 
 def solution(request):
     solution_item = Solution.objects.all()
-    return render(request, 'solution.html', {'solution_item':solution_item})
+    if request.user.is_authenticated:
+        user = request.user
+        user.notifications.mark_all_as_read()
+        return render(request, 'solution.html', {'solution_item':solution_item})
+    else:
+        return render(request, 'solution.html', {'solution_item':solution_item})
 
 def solutionDetail(request, solution_detail_id):
     solution_detail_item = get_object_or_404(Solution, pk = solution_detail_id)
     return render(request, 'solution_detail.html', {"solution_detail_item":solution_detail_item})
 
-def writing(request):
+def problemWrite(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        if request.method == "POST":
+            filled_form = ProblemForm(request.POST, request.FILES)
+            if filled_form.is_valid():
+                post = filled_form.save(commit=False)
+                post.userid = user_id
+                post.save()
+            return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
+
+        else:
+            prb_form = ProblemForm()
+        return render(request, 'problem_write.html', {'prb_form':prb_form})
+    else:
+        return render(request,'signin.html')
+
+
+def problemUpdate(request,problem_detail_id):
+    post = get_object_or_404(Problem,pk=problem_detail_id)
     user_id = request.user.id
-    user = request.user #알림 보낼 관리자
+    if(request.method == 'POST'):
+        form = ProblemForm(request.POST,request.FILES,instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.userid = user_id
+            form.save()
+            return redirect('problemList')
+    else:
+        prb_form = ProblemForm(instance=post)
+    return render(request,'problem_update.html',{'prb_form':prb_form})
+
+def problemDelete(request,problem_detail_id):
+    post = Problem.objects.get(pk=problem_detail_id)
+    post.delete()
+    return redirect('problemList')
+
+
+
+def solWrite(request):
+    solution_item = Solution.objects.all()
+    user_id = request.user.id
     recipients = myUser.objects.all()  #알림 받을 사람들
     if request.method == "POST":
-        filled_form = ProblemForm(request.POST)
+        filled_form = SolutionForm(request.POST, request.FILES)
         if filled_form.is_valid():
+            user = request.user
             post = filled_form.save(commit=False)
             post.userid = user_id
             post.save()
-            if user in recipients:
-                unread_messages = user.notifications.unread()
-                notify.send (user, recipient = recipients, verb ='님께서 새로운 숙제를 작성하셨습니다 (●''●)')
-            return redirect('problemList') #problemList 중에서도 최신 순으로 나열되어 있는 페이지를 보여주는 게 좋을듯 (나중에 추가하자)
-    prb_form = ProblemForm()
-    return render(request, 'writing.html', {'prb_form':prb_form})
+            notify.send (user, recipient = recipients, verb ='님이 새로운 문제를 해결했어요')
+        return redirect('solution')
+    else:
+        sol_form = SolutionForm()
+    return render(request, 'sol_writing.html', {'sol_form':sol_form,'solution_item':solution_item})
+
+
+def solutionUpdate(request,solution_detail_id):
+    post = get_object_or_404(Solution,pk=solution_detail_id)
+    user_id = request.user.id
+    if(request.method == 'POST'):
+        form = SolutionForm(request.POST,request.FILES,instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.userid = user_id
+            form.save()
+            return redirect('solution')
+    else:
+        sol_form = SolutionForm(instance=post)
+    return render(request,'solution_update.html',{'sol_form':sol_form})
+
+def solutionDelete(request,solution_detail_id):
+    post = Solution.objects.get(pk=solution_detail_id)
+    post.delete()
+    return redirect('solution')
 
 def signup(request):   #회원가입 기능
     if request.method == "GET":
@@ -120,11 +200,18 @@ def signin(request): #로그인 기능
 def signout(request): #로그아웃 기능
     logout(request) 
     return HttpResponseRedirect(reverse('index'))
+
+
 @login_required
-def mypage(request):
+def mypage(request): #마이페이지 #주희가 수정 중!
     user = request.user
     unread_messages = user.notifications.unread()
-    return render(request, 'mypage.html', {'unread_messages':unread_messages})
+    profile = myUser.objects.get(id=user.id)
+        #내가 쓴 글
+    my_problem_item = Problem.objects.filter(userid = user.id)
+    #내가 좋아하는 게시물
+    like_problem = profile.like_problems.all()
+    return render(request, 'mypage.html', {'my_problem_item': my_problem_item, 'like_problem':like_problem, 'unread_messages':unread_messages})
 
 @login_required
 def problem_like(request, problem_detail_key_id):
