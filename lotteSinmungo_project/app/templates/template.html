@@ -45,17 +45,15 @@
         align-items: center;
         }
     .logo{
-        width : 100%;
-        height :190px;
         background-color :white;
         text-align: center;
         }
     .m_bar{
-        width : 100%;
+        /* width : 100%;
         height: 80px;
-        line-height: 80px;
+        line-height: 80px; */
         background-color : #DA291C;
-        text-align : center;
+        /* text-align : center; */
         }
     .m_container{
         width : 100%;
@@ -75,7 +73,7 @@
         height : 500px;
         float: right;
         box-sizing: border-box;
-        background-color : purple;
+        background-color : white;
         flex-direction: column;
         display : flex;
         }
@@ -171,39 +169,110 @@
 <body>
 
 <!--상단 메뉴바-->
-        <nav class = "navbar navbar-light bg-light navbar navbar-expand-sm">
+    <div class="row navbar navbar-expand-sm navbar-light bg-light">
+        <!-- <nav class = "navbar navbar-light bg-light navbar navbar-expand-sm"> -->
             {% if user.is_authenticated %}
-            <a href="{% url 'mypage' %} " style="color: black; font-size : 15px; text-decoration: none;">마이페이지</a>&emsp;&emsp;&emsp;&emsp;
-            <a href="{% url 'signout' %}" style="color: black; font-size : 15px; text-decoration: none;">로그아웃</a>&emsp;&emsp;&emsp;&emsp;
+            <div class="col-md-4" style="text-align: center;"> 
+                <a href="{% url 'mypage' %} " style="color: black; font-size : 15px; text-decoration: none;">마이페이지</a>
+            </div>
+            <div class="col-md-4" style="text-align: center;"> 
+                <a href="{% url 'signout' %}" style="color: black; font-size : 15px; text-decoration: none;">로그아웃</a>
+            </div>
             {% else %}
-            <a href = "{% url 'signin' %}" style="color: black; font-size : 15px; text-decoration: none;">로그인</a> &emsp;&emsp;&emsp;&emsp;
-            <a href = "{% url 'signup' %}" style="color: black; font-size : 15px; text-decoration: none;">회원가입</a>&emsp;&emsp;&emsp;&emsp;
+            <div class="col-md-4" style="text-align: center;">
+            <a href = "{% url 'signin' %}" style="color: black; font-size : 15px; text-decoration: none;">로그인</a> 
+            </div>
+            <div class="col-md-4" style="text-align: center;"> 
+            <a href = "{% url 'signup' %}" style="color: black; font-size : 15px; text-decoration: none;">회원가입</a>
+           </div>
             {% endif %}
-            
-            <a href = "https://www.lotteon.com/p/customer/customerCenter/customerMain" style= "color: black; font-size : 15px; text-decoration: none;">고객센터</a>&emsp;&emsp;&emsp;&emsp;
-            </nav>
-        <div class = "bar">
+            <div class="col-md-4" style="text-align: center;">
+                <a href = "https://www.lotteon.com/p/customer/customerCenter/customerMain" style= "color: black; font-size : 15px; text-decoration: none;">고객센터</a>
+            </div>
+    </div>
+
             <div class = "logo">
                 <a href = "{% url 'index' %}">
                     <img src = "../static/image/mainlogo.png" width = "790px" height = "160px">
                 </a>
             </div>
-            <div class = "m_bar">
-                <a href ="{% url 'solution' %}" style="color: white; font-size : 25px;text-decoration: none;">롯데가 해냈어</a>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a style="color: white; font-size : 25px;">|</a>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                <a href ="{% url 'problemList' %}" style="color: white; font-size : 25px;text-decoration: none;">롯데의 숙제들</a>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a style="color: white; font-size : 25px;text-decoration: none;">|</a>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                <a href ="{% url 'problemWrite' %}" style="color: white; font-size : 25px;text-decoration: none;">롯데에게 말해줘</a>
+      
+        <div class = "row m_bar ">
+            <div class = "col-md-4 align-self-center" style="height: 100px; text-align: center; top: 30px;">
+                <a href ="{% url 'solution' %}" style="color: white; font-size : 25px; text-decoration: none;">롯데가 해냈어</a>
+            </div>
+            <div class = "col-md-4 align-self-center" style="height: 100px; text-align: center; top: 30px;">
+                <a href ="{% url 'problemList' %}" style="color: white; font-size : 25px; text-decoration: none;">롯데의 숙제들</a>
+            </div>
+            <div class = "col-md-4 align-self-center" style="height: 100px; text-align: center; top: 30px;">
+                <a href ="{% url 'problemWrite' %}" style="color: white; font-size : 25px; text-decoration: none;">롯데에게 말해줘</a>
             </div>
         </div>
-      
+
+
+
 
 <!-- 다른 HTML 파일의 contents block이 삽입되는 부분-->
 {% block contents %}
 
 {% endblock contents %} 
+
+<!-- Footer -->
+<footer class="page-footer font-small indigo">
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left">
+      <!-- Grid row -->
+      <div class="row">
+        <!-- Grid column -->
+        <div class="col-md-3 mx-auto">
+          <!-- Links -->
+          <ul class="list-unstyled">
+            <li>
+              <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style=" text-decoration: none; color :#707070;" >About</a>
+            </li>
+          </ul>
+
+        </div>
+        <!-- Grid column -->
+        <hr class="clearfix w-100 d-md-none">
+        <!-- Grid column -->
+        <div class="col-md-3 mx-auto">
+          <!-- Links -->
+          <ul class="list-unstyled">
+            <li>
+              <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style=" text-decoration: none; color :#707070;">Developer</a>
+            </li>
+          </ul>
+  
+        </div>
+        <!-- Grid column -->
+  
+        <hr class="clearfix w-100 d-md-none">
+        <!-- Grid column -->
+        <div class="col-md-3 mx-auto">
+          <!-- Links -->
+          <ul class="list-unstyled">
+            <li>
+              <a href= "https://www.lotteon.com/p/customer/customerCenter/customerMain#" style=" text-decoration: none; color :#707070;">FamilySite</a>
+            </li>
+          </ul>
+  
+        </div>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+    <!-- Footer Links -->
+  
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+      <a href="https://mdbootstrap.com/" style=" text-decoration: none; color :#707070;"> MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+  
+  </footer>
+  <!-- Footer -->
 
 </body>
 </html>
