@@ -4,13 +4,22 @@
 
 {% block title %}
 <title>롯데신문고</title>
+<style>
+    .chracter{
+        position: absolute;
+        z-index: 1;
+        right: 60px;
+        top: 350px;
+    }
+</style>
 {% endblock title %}
 
 {% block contents %}
+<img src="../static/image/롯문고 캐릭터_수정.png" class="img-responsive chracter" width="700px">
 <div class = "container-fluid">
 
         <div class = "row m_container">
- 
+
             <div class="col-lg-4">
                 <div class = "l_container">
                     <div class="contextBox" style="text-align: left; background-color:#f5f5f5;
@@ -33,13 +42,15 @@
             </div>
             <div class="col-lg-5">
                 <div class = "r_container">
-                            <br><br><a style  = "color : gray; font-size : 20px; font-weight : bold;">롯데그룹은 고객의 목소리를 듣습니다.</a><br><br>
+                            <br><br><a style  = "color : gray; font-size : 30px; font-weight : bold;">롯데그룹은 고객의 목소리를 듣습니다.</a><br><br>
                             <a style = "color : gray; font-size : 18px;">롯데 신문고에 방문해주셔서 감사합니다. <br>
                             무엇이든 말씀해주세요 ! </a>
+   
                 </div>
             </div>
             {% if user.is_authenticated %}
             <div class="col-lg-1">
+
             </div> 
             {% else %}
 
