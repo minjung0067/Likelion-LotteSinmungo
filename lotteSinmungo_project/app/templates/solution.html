@@ -8,24 +8,72 @@
 
 {% block contents %}    
 
-<div class="container" >
 
-{% if request.user.is_superuser %}
+<div class="container">
 
-    <a href= "{% url 'solWrite' %}" style="border : 0px; border-radius: 20px; background-color: rgba(233, 94, 94, 0.685); color: white; align-items: center; height: 100px; font-size: 20px; margin: 0 auto; width: 100% ">관리자 권한으로 글쓰기 </a>
-    {% endif %}
+    <table class = "table table-hover">
+        <thead class = "thead-light">
+        <tr class="thead-dark" >
+            <th style="color:  #DA291C; width: 55%;">제목</th>
 
-    {% for solution in solution_item.all %}
-    <a href= "{% url 'solutionDetail' solution.id %}">
-        <h1> {{solution.title}}</h1>
-    </a>
-    {% endfor %}
+            <th style="color:  #DA291C;">작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in solution_item %}
+        <tr>
+            <td style="background-color: white;">
+                <a style="text-decoration: none; color: black; " href= "{% url 'solutionDetail' i.id %}">{{i.title}}</a>
+            </td>
+
+            <td style="background-color: white;">{{ i.original_date|date:"Y년 m월 d일"}}</td>
+            {% endfor %}
+        </tr>
+    </tbody>
+    </table>    
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <nav>
+                <!-- Sorting Button -->
+                <select class="custom-select" id="sort-select" onchange="location = this.value;" style="width: 7%; float: left;">
+                    <option class= "none" value="?sort=none">---</option>
+                    <option class= "sort-likes" value="?sort=many_like">공감순</option>
+                    <option class= "sort-date'" value="?sort=early_date">최신순</option>
+                </select>
+
+                <ul class="pagination justify-content-center">
+                    {% if solution_item.has_previous %}                         
+                    <li class="page-item">
+                        <a class="page-link" href="?p={{solution_item.previous_page_number }}">이전으로</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">이전으로</a>
+                    </li>
+                    {% endif %}
+                    <li class="page-item">
+                        <a class="page-link" href="#" style="color: black;">{{solution_item.number}}/{{solution_item.paginator.num_pages}}</a>
+                    </li>
+                    {% if solution_item.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?p={{solution_item.next_page_number }}">다음으로</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">다음으로</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
 
 </div>
-<div class = "footer">
-    <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">About&emsp;</a>
-    <a href= "https://github.com/Gobans/Likelion-LotteSinmungo" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">Developer&emsp;</a>
-    <a href= "https://www.lotteon.com/p/customer/customerCenter/customerMain#" style="margin: auto 20px; text-decoration: none; color :#707070; font-size: 15px;">FamilySite&emsp;</a>
+<div style="text-align: right; padding-right: 220px;">
+{% if request.user.is_superuser %}
 
+    <a href= "{% url 'solWrite' %}" style="border : 0px; border-radius: 20px; align-items: center; height: 100px; font-size: 20px; margin: 0 auto; width: 100%; text-decoration: none; color: black; ">관리자 권한으로 글쓰기 </a>
+    {% endif %}
 </div>
 {% endblock contents %}
