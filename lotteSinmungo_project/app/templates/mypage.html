@@ -80,6 +80,7 @@
     .img_sec{
         position: relative;
         width: 100%;
+
     }
     .info_sec{
         text-align: center;
@@ -122,6 +123,10 @@
     }
     .profile_img{
         opacity: 80%;
+        max-width: 100%;
+        width: auto;
+        height: auto;
+        vertical-align: bottom;
     }
     .nickname{
         padding: 10px;
@@ -143,17 +148,14 @@
     <title>롯데신문고</title>
     {% endblock title %}
     
-    {% block contents %}
+    
     <!-- 이 아래부터는 html 콘텐츠 내용입니다 -->
-    {% if user.is_authenticated %}
+    {% block contents %}
     <div class = "containerr">
         <div class = "profile">
-            <div class = "profile_img">
-                {% if user.image %}
-                    <img class="profile_img" src="{{user.image.url}}" style="width: 130px; height: 130px;">
-                {% else %}
-                    <img class="profile_img" src = "../static/image/캐릭터평면혼자.png" style="width: 130px; height: 130px; opacity: 100%;">
-                {% endif %}
+            <div>
+                <img class="profile_img" src = "../static/image/캐릭터평면혼자.png" style=" opacity: 100%;">
+
             </div>
             <div class = "nickname">
                 <p> {{user.username}}</p>
@@ -221,6 +223,7 @@
                 {% endfor %}   
                 </div>
             </div>
+        </div>
 
 
 
@@ -230,12 +233,6 @@
             <img class="lotte_image" src = "../static/image/롯문고 마이페이지.png" width = "330px" height = "300px">
         </div>
 
-    
-    {% else %}
-    <p>로그인이 필요한 서비스입니다</p>
-    {% endif %}
-    </div>
-    
     
     {% endblock contents %}
     
