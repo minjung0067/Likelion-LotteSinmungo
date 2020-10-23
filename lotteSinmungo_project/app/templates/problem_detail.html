@@ -111,7 +111,7 @@ button{
     </div>
     
     <div class = "body">
-    <p>{{problem_detail_key.body}} </p>
+    <p>{{problem_detail_key.body|linebreaks}} </p>
         {% if problem_detail_key.image %}
             <img src="{{problem_detail_key.image.url}}"style="max-width: 100%; height: auto;">
         {% endif %}
