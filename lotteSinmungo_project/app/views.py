@@ -125,7 +125,7 @@ def solWrite(request):
             post = filled_form.save(commit=False)
             post.userid = user_id
             post.save()
-            notify.send (user, recipient = recipients, verb ='님이 새로운 문제를 해결했어요')
+            notify.send (request.user, recipient = recipients, verb ='님 저희가 해결했어요')
         return redirect('solution')
     else:
         sol_form = SolutionForm()
