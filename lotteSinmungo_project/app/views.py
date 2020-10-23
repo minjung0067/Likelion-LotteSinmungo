@@ -60,6 +60,10 @@ def problemList(request):
 
 def solution(request):
     solution_item = Solution.objects.all()
+
+    page = int(request.GET.get('p', 1)) #현재 페이지 할당
+    paginator = Paginator(solution_item, 15) #페이지당 보여줄 게시물
+    solution_item = paginator.get_page(page)
     if request.user.is_authenticated:
         user = request.user
         user.notifications.mark_all_as_read()

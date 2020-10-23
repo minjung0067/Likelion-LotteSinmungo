@@ -1,22 +1,15 @@
 {% extends "template.html" %}
 {% load static %}
-
+{% load bootstrap4 %}
 {% block title %}
 <title>롯데신문고</title>
 {% endblock title %}
 
 {% block contents %}
 <body>
-    <a href = "{% url 'index' %}">이미지로고자리</a>
-    <a href ="{% url 'solution' %}">롯데가해냈어</a>
-    <a href ="{% url 'problemList' %}">롯데의숙제들</a>
-    <a href ="{% url 'problemWrite' %}">롯데에게말해줘</a>
-    <a href='/signin'>로그인</a>
-    <a href='/signup'>회원가입</a>
-
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{sol_form.as_p}}
+        {% bootstrap_form sol_form %}
         <input type="submit" value="확인">
     </form>
     <div class = "footer">
