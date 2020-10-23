@@ -1,13 +1,14 @@
 <style>
     .containerr{
         max-width: 1180px;
-        width: 100%;
+        width: 80%;
+        position: relative;
         margin-left: auto;
         margin-right: auto;
     }
     .titled{
         display: flex;
-        margin: 72px 10px 3px;
+        margin: 2px 10px 3px;
     }
     .top{
         
@@ -75,16 +76,29 @@
     }
     .lotte_image{
         position: fixed;
-        align-items: center;
+        align-items: right;
         right:0px;
         bottom: 10px;
         opacity: 70%;
-        padding-bottom: 50px;
+        padding-bottom: 40px;
         z-index: -1;
     }
     
+    .userpage{
+        position: relative;
+        float: left;
+        background-color: #fff;
+        padding: 42px 32px 120px;
+        width: calc(100% - 233px);
+    }
     .problem_box{
         display: inline-block;
+    }
+    .profile{
+        position: relative;
+        float: left;
+        padding: 56px 24px 0;
+        width: 233px;
     }
     
     </style>
@@ -100,65 +114,78 @@
     <!-- 이 아래부터는 html 콘텐츠 내용입니다 -->
     {% if user.is_authenticated %}
     <div class = "containerr">
-        <div class = "titled">
-            <p class="top">새 알림</p>
+        <div class = "profile">
+            <div class = "profile_img">
+                {% if user.image %}
+                    <img class="profile_img" src="{{user.image.url}}" style="width: 230px; height: 200px;">
+                {% else %}
+                    <img class="profile_img" src = "../static/image/롯문고 캐릭터_배경제거.png" style="width: 230px; height: 200px;">
+                {% endif %}
+            </div>
         </div>
+        <div class = "userpage">
+            <div class = "titled">
+                <p class="top">새 알림</p>
+            </div>
+            
+            <div class = "contents">
+                {% for unread_messages in unread_messages.all %}
+                <p class="notify"> {{unread_messages}}</p>
+                {{ notifications_tags }}
+                {% endfor %}
+            </div>
         
-        <div class = "contents">
-            {% for unread_messages in unread_messages.all %}
-            <p class="notify"> {{unread_messages}}</p>
-            {{ notifications_tags }}
-            {% endfor %}
-        </div>
-    
-        <div class = "titled">
-            <p class="top">좋아요한 글</p>
-        </div>
+            <div class = "titled">
+                <p class="top">좋아요한 글</p>
+            </div>
+            
+            <div class = "contentt">
+                {% for like_item in like_problem %}
+                    <div class = "problem_box">
+                        <a href= "{% url 'problemDetail' like_item.id %}">
+                            <div class = "probl_box">
+                                {% if like_item.image %}
+                                    <img class="img_sec" src="{{like_item.image.url}}"style="width:170px; height: 170px; opacity: 70%">
+                                {% else %}
+                                    <img class="img_sec" src = "../static/image/롯문고 캐릭터_배경제거.png" style="width:240px; height: 190px; opacity: 50%;">
+                                {% endif %}
+                                <div class = "info_sec">
+                                    {{like_item.title}}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}                
+            </div>    
         
-        <div class = "contentt">
-            {% for like_item in like_problem %}
+            <div class = "titled">
+                <p class="top">내가 작성한 글</p>
+            </div>
+        
+            <div class = "contentt">
+                {% for probl_item in my_problem_item %}
                 <div class = "problem_box">
-                    <a href= "{% url 'problemDetail' like_item.id %}">
+                    <a href= "{% url 'problemDetail' probl_item.id %}">
                         <div class = "probl_box">
-                            {% if like_item.image %}
-                                <img class="img_sec" src="{{like_item.image.url}}"style="width:200px; height: 200px; opacity: 70%">
+                            {% if probl_item.image %}
+                                <img class="img_sec" src="{{probl_item.image.url}}"style="width:170px; height: 170px; opacity: 70%">
                             {% else %}
-                                <img class="img_sec" src = "../static/image/롯문고 캐릭터_배경제거.png" style="width:260px; height: 210px; opacity: 50%;">
+                                <img class="img_sec" src = "../static/image/롯문고 캐릭터_배경제거.png" style="width:240px; height: 190px; opacity: 50%;">
                             {% endif %}
                             <div class = "info_sec">
-                                {{like_item.title}}
+                                {{probl_item.title}}
                             </div>
                         </div>
                     </a>
                 </div>
-            {% endfor %}                
-        </div>    
-    
-        <div class = "titled">
-            <p class="top">내가 작성한 글</p>
+            {% endfor %}   
         </div>
-    
-        <div class = "contentt">
-            {% for probl_item in my_problem_item %}
-            <div class = "problem_box">
-                <a href= "{% url 'problemDetail' probl_item.id %}">
-                    <div class = "probl_box">
-                        {% if probl_item.image %}
-                            <img class="img_sec" src="{{probl_item.image.url}}"style="width:200px; height: 200px; opacity: 70%">
-                        {% else %}
-                            <img class="img_sec" src = "../static/image/롯문고 캐릭터_배경제거.png" style="width:260px; height: 210px; opacity: 50%;">
-                        {% endif %}
-                        <div class = "info_sec">
-                            {{probl_item.title}}
-                        </div>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}   
+
+
 
 
         <div>
-            <img class="lotte_image" src = "../static/image/롯문고 마이페이지.png" width = "530px" height = "500px">
+            <img class="lotte_image" src = "../static/image/롯문고 마이페이지.png" width = "330px" height = "300px">
         </div>
 
     
