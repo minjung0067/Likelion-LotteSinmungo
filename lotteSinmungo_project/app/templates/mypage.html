@@ -143,7 +143,7 @@
             <div class = "problem_box">
                 <a href= "{% url 'problemDetail' probl_item.id %}">
                     <div class = "probl_box">
-                        {% if like_item.image %}
+                        {% if probl_item.image %}
                             <img class="img_sec" src="{{probl_item.image.url}}"style="width:200px; height: 200px; opacity: 70%">
                         {% else %}
                             <img class="img_sec" src = "../static/image/롯문고 캐릭터_배경제거.png" style="width:260px; height: 210px; opacity: 50%;">

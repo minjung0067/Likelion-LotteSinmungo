@@ -10,21 +10,21 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap.min.css' %}">
-
-    
-
+    <link rel = "shortcut icon" href = "{% static 'image/favicon.ico' %}" type="image/x-icon">
 </head>
 
 <style>
+    @font-face {
+  font-family: 'LotteMartHappy';
+  font-style: normal;
+  font-weight: 400;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff') format('woff');
+}   
 
     * {
     margin: 0px;
     padding: 0px;
-    font-family: Helvetica,
-		   '맑은 고딕', 'malgun gothic',
-		   'Apple SD Gothic Neo', 'Apple SD 산돌고딕 Neo', 
-		   'Microsoft NeoGothic', 
-		   'Droid sans', sans-serif;
+    font-family: 'LotteMartHappy', sans-serif;
 }
     #a { text-decoration:none }
     .container-fluid {
@@ -186,6 +186,7 @@
             <a href = "{% url 'signup' %}" style="color: black; font-size : 15px; text-decoration: none;">회원가입</a>
            </div>
             {% endif %}
+      
             <div class="col-md-4" style="text-align: center;">
                 <a href = "https://www.lotteon.com/p/customer/customerCenter/customerMain" style= "color: black; font-size : 15px; text-decoration: none;">고객센터</a>
             </div>
