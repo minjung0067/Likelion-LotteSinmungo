@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,8 +8,15 @@
     <link rel = "shortcut icon" href = "{% static 'image/favicon.ico' %}" type="image/x-icon">
 </head>
 <style>
+@font-face {
+  font-family: 'LotteMartHappy';
+  font-style: normal;
+  font-weight: 400;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff') format('woff');
+}   
 body{
     margin: 0;
+    font-family: 'LotteMartHappy', sans-serif;
 }
 
 .top{
