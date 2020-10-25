@@ -1,13 +1,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Likelion-LotteSinmungo
-Developer
-한양대학교 EIRCA 멋쟁이사자처럼 8기 🦁
-김재훈 이민정 이명환 이예빈 우인아 차주희 
+Developer <br>
+한양대학교 EIRCA 멋쟁이사자처럼 8기 🦁 <br>
+김재훈 이민정 이명환 이예빈 우인아 차주희
 
 ## about LotteSinmungo
-불만은 나누고 ➗ , 친근감은 더하는 ➕ 롯데신문고입니다.
-흩어져 있는 불만사항을 함께 공유할 수 있는 신문고 서비스입니다.
+불만은 나누고 ➗ , 친근감은 더하는 ➕ 롯데신문고입니다. <br>
+흩어져 있는 불만사항을 함께 공유할 수 있는 신문고 서비스입니다. <br>
 
 - 비슷한 요구사항, 비슷한 불만사항에 함께 공감하고 해결책 얻기
 - 매 달 가장 높은 공감 수를 기록하는 TOP3 불만사항 해결안 제시
