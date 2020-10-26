@@ -1,7 +1,21 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Likelion-LotteSinmungo
-Developer 김재훈 이민정 이명환 이예빈 우인아 차주희
+Developer <br>
+한양대학교 EIRCA 멋쟁이사자처럼 8기 🦁 <br>
+김재훈 이민정 이명환 이예빈 우인아 차주희
+
+## about LotteSinmungo
+불만은 나누고 ➗ , 친근감은 더하는 ➕ 롯데신문고입니다. <br>
+흩어져 있는 불만사항을 함께 공유할 수 있는 신문고 서비스입니다. <br>
+
+- 비슷한 요구사항, 비슷한 불만사항에 함께 공감하고 해결책 얻기
+- 매 달 가장 높은 공감 수를 기록하는 TOP3 불만사항 해결안 제시
+- 공감순, 최신순 정렬 기능으로 한 눈에 불만사항 보기
+- 롯데신문고만의 자체 캐릭터 로삐, 로찌
+- 운영자와 사용자 계정간 웹 기능 차별화
+- 마이페이지에서 내가 작성한 글과 공감한 글 보기
+- 해결책 업데이트 시, 개인별 알림 서비스 제공
 
 ## Service logo
 <img width="200" alt="1" src="https://user-images.githubusercontent.com/56781342/95324147-3e892480-08da-11eb-8a9e-d9d5cdf03615.png">
@@ -16,31 +30,7 @@ https://xd.adobe.com/view/8c7e09e3-94f1-41ee-9607-ab5e32c3d3c4-d92d/
 >CSS info:
 https://zpl.io/V07vLZR
 
-## To do list
-모델 짜기
-
-게시물(내용, 공감수, 날짜) ✔
-
-마이페이지
-
----기능들---
-
-글 작성 ✔
-
-공감 ✔
-
-정렬
-
-알림
-
-로그인 회원가입 ✔
-
-랭킹 받아서 보여주기 
-
-랭킹 주기적으로 초기화
-
 ## License
-
 MIT License
 
 Copyright (c) 2020 Colton
